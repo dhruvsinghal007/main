@@ -8,13 +8,14 @@ package com.safe;
  */
 public final class ImmutableClass {
 	private final int number;
-	private final String string;
+	private final String string, mClassId;
 	private final MutableClass mClass;
 	
 	public ImmutableClass(int number, String string, MutableClass mClass) {
 		this.number = number;
 		this.string = string;
 		this.mClass = mClass;
+		mClassId = mClass.toString();
 	}
 	
 	public int getNumber(){
@@ -23,6 +24,10 @@ public final class ImmutableClass {
 	
 	public String getString(){
 		return string;
+	}
+
+	public String getmClassId() {
+		return mClassId;
 	}
 
 	/*
