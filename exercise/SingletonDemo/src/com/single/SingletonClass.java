@@ -1,7 +1,7 @@
 package com.single;
 
 public class SingletonClass {
-	private static volatile SingletonClass obj ;
+	private static SingletonClass obj ;
 	private String message;
 	
 	private SingletonClass(String message){
@@ -15,8 +15,12 @@ public class SingletonClass {
 	 */
 	public static SingletonClass getSingletonObject(String newMessage){
 		if(obj == null){
-			obj = new SingletonClass(newMessage);
-			System.out.println("New instance created.");
+			synchronized (SingletonClass.class) {
+				if(obj == null){
+					obj = new SingletonClass(newMessage);
+					System.out.println("New instance created.");
+				}
+			}
 		}
 		else{
 			System.out.println("New instance not created.");
