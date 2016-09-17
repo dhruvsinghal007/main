@@ -1,4 +1,4 @@
-package resource;
+package resource.safe;
 
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;

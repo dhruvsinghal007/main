@@ -1,6 +1,6 @@
 package safe.concurrent.utils;
 
-import resource.Resource;
+import resource.safe.Resource;
 
 public class OddEvenTester {
 

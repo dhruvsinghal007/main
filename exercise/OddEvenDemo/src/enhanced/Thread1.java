@@ -1,6 +1,6 @@
 package enhanced;
 
-import resource.Resource;
+import resource.safe.Resource;
 
 public class Thread1 implements Runnable {
 
