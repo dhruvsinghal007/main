@@ -1,7 +1,7 @@
 /**
  * 
  */
-package concurrent_hashmap;
+package concurrenthashmap;
 
 import java.util.Map;
 

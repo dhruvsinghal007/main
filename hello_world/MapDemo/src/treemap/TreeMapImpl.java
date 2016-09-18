@@ -1,4 +1,4 @@
-package tree_map;
+package treemap;
 
 import java.util.Iterator;
 import java.util.Set;
