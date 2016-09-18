@@ -1,7 +1,7 @@
 package com.single;
 
 public class SingletonClass {
-	private static SingletonClass obj ;
+	private static volatile SingletonClass obj ;
 	private String message;
 	
 	private SingletonClass(String message){
