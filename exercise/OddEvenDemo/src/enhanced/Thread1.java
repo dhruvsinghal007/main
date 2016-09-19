@@ -5,6 +5,7 @@ import resource.safe.Resource;
 public class Thread1 implements Runnable {
 
 	private Resource resource;
+	private Thread2 thread2;
 	
 	public Thread1(Resource resource) {
 		this.resource = resource;
@@ -14,18 +15,26 @@ public class Thread1 implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		while (true) {
-			try {
-				int num ;
-				if ((num = resource.getNumber()) % 3 == 0) {
-					resource.setNumber(++num);
-					System.out.println("t1 : " + resource.getNumber());
+			
+			int num = resource.getNumber();
+			resource.setNumber(++num);
+			System.out.println("t1 : " + resource.getNumber());
+			
+			synchronized (thread2) {
+				thread2.notify();
+			}
+			synchronized (this) {
+				try {
+					wait(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
-				
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
 			}
 		}
+	}
+
+	public void setThread2(Thread2 thread2) {
+		this.thread2 = thread2;
 	}
 
 }

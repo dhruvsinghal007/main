@@ -23,18 +23,13 @@ public class OddThread implements Runnable {
 				int num = resource.getNumber();
 				resource.setNumber(++num);
 				System.out.println("Odd : " + resource.getNumber());
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 			}
 			synchronized (evenThread) {
 				evenThread.notify();
 			}
 			synchronized (this) {
 				try {
-					wait();
+					wait(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

@@ -19,25 +19,20 @@ public class EvenThread implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		while (true) {
-			synchronized (this) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
 			synchronized (resource) {
 				int num = resource.getNumber();
 				resource.setNumber(++num);
 				System.out.println("Even : " + resource.getNumber());
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 			}
 			synchronized (oddThread) {
 				oddThread.notify();
+			}
+			synchronized (this) {
+				try {
+					wait(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

@@ -5,6 +5,7 @@ import resource.safe.Resource;
 public class OddThread implements Runnable {
 
 	private Resource resource;
+	private EvenThread evenThread;
 	
 	public OddThread(Resource resource) {
 		this.resource = resource;
@@ -14,18 +15,26 @@ public class OddThread implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		while (true) {
-			try {
-				int num ;
-				if ((num = resource.getNumber()) % 2 == 0) {
-					resource.setNumber(++num);
-					System.out.println("Odd : " + resource.getNumber());
+			int num = resource.getNumber() ;
+			resource.setNumber(++num);
+			System.out.println("Odd : " + resource.getNumber());
+			
+			synchronized (evenThread) {
+				evenThread.notify();
+			}
+			
+			synchronized (this) {
+				try {
+					wait(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
-				
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void setEvenThread(EvenThread evenThread) {
+		this.evenThread = evenThread;
 	}
 
 }

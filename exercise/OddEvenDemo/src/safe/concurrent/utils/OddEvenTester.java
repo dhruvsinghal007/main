@@ -8,8 +8,14 @@ public class OddEvenTester {
 		// TODO Auto-generated method stub
 		Resource resource = new Resource(0);
 		
-		new Thread(new OddThread(resource)).start();
-		new Thread(new EvenThread(resource)).start();
+		OddThread oddThread = new OddThread(resource);
+		EvenThread evenThread = new EvenThread(resource);
+		
+		oddThread.setEvenThread(evenThread);
+		evenThread.setOddThread(oddThread);
+		
+		new Thread(oddThread).start();
+		new Thread(evenThread).start();
 		
 	}
 
