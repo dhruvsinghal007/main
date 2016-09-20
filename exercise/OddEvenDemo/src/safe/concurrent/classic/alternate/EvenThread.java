@@ -6,6 +6,7 @@ public class EvenThread implements Runnable {
 
 	private Resource resource;
 	private OddThread oddThread;
+	private boolean wFlag1, wFlag2;
 	
 	public EvenThread(Resource resource) {
 		this.resource = resource;
@@ -19,22 +20,34 @@ public class EvenThread implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		while (true) {
+			synchronized (this) {
+				wFlag2 = wFlag1;
+				wFlag1 = wFlag1 ? false : true;
+				
+				try {
+					wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+				wFlag2 = wFlag1;
+			}
 			synchronized (resource) {
 				int num = resource.getNumber();
 				resource.setNumber(++num);
 				System.out.println("Even : " + resource.getNumber());
 			}
+			
+			while(oddThread.isWChanged() == false){}
+			
 			synchronized (oddThread) {
 				oddThread.notify();
-			}
-			synchronized (this) {
-				try {
-					wait(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 			}
 		}
 	}
 
+	public boolean isWChanged(){
+		return (!(wFlag1 == wFlag2));
+	}
+	
 }
