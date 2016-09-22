@@ -1,7 +1,11 @@
 package thread;
 
+import java.net.URL;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 
 import resource.Fork;
 import resource.Waiter;
@@ -18,11 +22,14 @@ public class Philosopher implements Runnable{
 	private Waiter waiter;
 	private List<Fork> forks;
 	private CountDownLatch latch;
+	static final Logger logger = Logger.getLogger(Philosopher.class);
 
 	public Philosopher(int id, Waiter waiter, CountDownLatch latch) {
 		this.id = id;
 		this.waiter = waiter;
 		this.latch = latch;
+		URL u = Philosopher.class.getClassLoader().getResource("log4j-config.xml");
+        DOMConfigurator.configure(u);
 	}
 	
 	public void setForks(List<Fork> forks) {
@@ -34,7 +41,8 @@ public class Philosopher implements Runnable{
 	}
 	
 	private void think(){
-		System.out.print("\nThread " + id + " thinking...");
+		//System.out.print("\nThread " + id + " thinking...");
+		logger.info("\nThread " + id + " thinking...");
 		try {
 			Thread.sleep((long) (Math.random() * 1000));
 		} catch (InterruptedException e) {
@@ -51,7 +59,8 @@ public class Philosopher implements Runnable{
 			}
 		}
 		else{
-			System.out.print("\nEating : Thread " + id);
+			//System.out.print("\nEating : Thread " + id);
+			logger.info("\nEating : Thread " + id);
 			try {
 				Thread.sleep((long) (Math.random() * 10000));
 			} catch (InterruptedException e) {
@@ -64,7 +73,8 @@ public class Philosopher implements Runnable{
 	
 	private void releaseForks(boolean flag){
 		if(flag){
-			System.out.print("\nThread " + id + " released forks");
+			//System.out.print("\nThread " + id + " released forks");
+			logger.info("\nThread " + id + " released forks");
 			waiter.takeForks(forks);
 			forks = null;
 		}

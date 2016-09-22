@@ -1,11 +1,15 @@
 package resource;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.Semaphore;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 
 import thread.Philosopher;
 
@@ -21,6 +25,7 @@ public class Waiter{
 	private Semaphore semaphore;
 	private BlockingQueue<Philosopher> queue;
 	private CountDownLatch latch;
+	static final Logger logger = Logger.getLogger(Waiter.class);
 	
 	public Waiter(Fork[] forks, Semaphore semaphore, CountDownLatch latch) {
 		// TODO Auto-generated constructor stub
@@ -28,6 +33,8 @@ public class Waiter{
 		this.semaphore = semaphore;
 		queue = new LinkedBlockingQueue<Philosopher>();
 		this.latch = latch;
+		URL u = Waiter.class.getClassLoader().getResource("log4j-config.xml");
+        DOMConfigurator.configure(u);
 	}
 	
 	public void addRequest(Philosopher philosopher){
@@ -42,7 +49,8 @@ public class Waiter{
 	private void giveForks(){
 		try {
 			semaphore.acquire();
-			System.out.print("\nPhilosopher Queue status : ");
+			//System.out.print("\nPhilosopher Queue status : ");
+			logger.info("\nPhilosopher Queue status : ");
 			for(Philosopher ph : queue){
 				System.out.print(ph.getId() + " ");
 			}

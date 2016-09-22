@@ -1,5 +1,10 @@
 package thread;
 
+import java.net.URL;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
+
 import resource.Fork;
 import resource.ForkState;
 
@@ -14,9 +19,12 @@ public class Philosopher implements Runnable{
 	private int id;
 	private Philosopher leftPhilosopher,rightPhilosopher;
 	private Fork leftFork,rightFork;
+	static final Logger logger = Logger.getLogger(Philosopher.class);
 	
 	public Philosopher(int id) {
 		this.id = id;
+		URL u = Philosopher.class.getClassLoader().getResource("log4j-config.xml");
+        DOMConfigurator.configure(u);
 	}
 	
 	@Override
@@ -42,7 +50,8 @@ public class Philosopher implements Runnable{
 	}
 	
 	private void think(){
-		System.out.print("\nThinking : " + Thread.currentThread().getName());
+		//System.out.print("\nThinking : " + Thread.currentThread().getName());
+		logger.info("\nThinking : " + Thread.currentThread().getName());
 		try {
 			Thread.sleep((long) (Math.random() * 10000));
 		} catch (InterruptedException e) {
@@ -53,7 +62,9 @@ public class Philosopher implements Runnable{
 	private void eat(){
 		synchronized (leftFork) {
 			synchronized (rightFork) {
-				System.out.print("\nEating : " + Thread.currentThread().getName());
+				//System.out.print("\nEating : " + Thread.currentThread().getName());
+				logger.info("\nEating : " + Thread.currentThread().getName());
+				
 				leftFork.setState(ForkState.DIRTY);
 				rightFork.setState(ForkState.DIRTY);
 				try {
@@ -61,7 +72,9 @@ public class Philosopher implements Runnable{
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				System.out.print("\nDone Eating : " + Thread.currentThread().getName());
+				
+				//System.out.print("\nDone Eating : " + Thread.currentThread().getName());
+				logger.info("\nDone Eating : " + Thread.currentThread().getName());
 			}
 		}
 	}
