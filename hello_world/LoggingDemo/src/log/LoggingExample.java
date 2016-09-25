@@ -1,6 +1,9 @@
 package log;
 
+import java.net.URL;
+
 import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 
 public class LoggingExample {
 
@@ -8,8 +11,11 @@ public class LoggingExample {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		logger.info("An info message !");
-		logger.error("An error message !");
+		DOMConfigurator.configure("log4j.xml");
+        	
+		logger.info("info");
+		
+		logger.error("error");
 	}
 
 }
