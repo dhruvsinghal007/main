@@ -2,14 +2,27 @@ package delayqueue;
 
 import java.util.concurrent.BlockingQueue;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DelayObjectProducer.
+ */
 public class DelayObjectProducer implements Runnable {
 	
+	/** The blocking queue. */
 	private BlockingQueue<DelayObject> queue;
 
+	/**
+	 * Instantiates a new delay object producer.
+	 *
+	 * @param queue the blocking queue
+	 */
 	public DelayObjectProducer(BlockingQueue<DelayObject> queue) {
 		this.queue = queue;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub

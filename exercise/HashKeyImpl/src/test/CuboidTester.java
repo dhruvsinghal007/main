@@ -9,15 +9,18 @@ import org.junit.Test;
 
 import volume.Cuboid;
 
+// TODO: Auto-generated Javadoc
 /**
- * testing the correctness of equals and hashCode method override. Firstly similar and 
- * dissimilar objects are tested for equals, and then the validity of hashCode is
- * tested against a collection storing the cuboid objects for checking availability. 
+ * Class CuboidTester
+ * testing the correctness of equals and hashCode method override. Firstly similar and dissimilar objects are tested for equals, and then the validity of hashCode is tested against a collection storing the cuboid objects for checking availability. 
  * @author Dhruv
  *
  */
 public class CuboidTester {
 
+	/**
+	 * Test.
+	 */
 	@Test
 	public void test() {
 		Cuboid c1 = new Cuboid(2, 5, 8);

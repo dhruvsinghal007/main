@@ -7,7 +7,9 @@ import org.junit.Test;
 import com.safe.ImmutableClass;
 import com.safe.MutableClass;
 
+// TODO: Auto-generated Javadoc
 /**
+ * Class ImmutableTest
  * The immutable class defined has three members : int , String and MutableClass obj
  * Out of these, only mutable object needs to be tested because others would not
  * have changed anyway.
@@ -20,6 +22,9 @@ import com.safe.MutableClass;
  */
 public class ImmutableTest {
 
+	/**
+	 * Test.
+	 */
 	/*
 	 * testing only the mutable member of class
 	 */

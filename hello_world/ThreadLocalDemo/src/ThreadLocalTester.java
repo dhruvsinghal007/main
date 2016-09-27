@@ -1,5 +1,15 @@
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ThreadLocalTester.
+ */
 public class ThreadLocalTester {
+	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
 		threadLocal.set(0);

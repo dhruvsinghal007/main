@@ -2,3 +2,5 @@
 2016-09-26 00:24:06 ERROR LoggingExample:18 - error
 2016-09-26 00:24:06 INFO  LoggingExample:16 - info
 2016-09-26 00:24:06 ERROR LoggingExample:18 - error
+2016-09-28 00:02:26 INFO  LoggingExample:24 - info
+2016-09-28 00:02:26 ERROR LoggingExample:26 - error

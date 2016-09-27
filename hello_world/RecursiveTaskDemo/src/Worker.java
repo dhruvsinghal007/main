@@ -1,5 +1,6 @@
 import java.util.concurrent.RecursiveTask;
 
+// TODO: Auto-generated Javadoc
 /**
  * simple class to print summation of given range of numbers. If the range has more than 10 elements they are 
  * split into two halves and final result is their combination.
@@ -8,14 +9,26 @@ import java.util.concurrent.RecursiveTask;
  */
 public class Worker extends RecursiveTask<Integer>{
 
+	/** The start. */
 	private int start;
+	
+	/** The end. */
 	private int end;
 
+	/**
+	 * Instantiates a new worker.
+	 *
+	 * @param start the start
+	 * @param end the end
+	 */
 	public Worker(int start, int end) {
 		this.start = start;
 		this.end = end;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.util.concurrent.RecursiveTask#compute()
+	 */
 	@Override
 	protected Integer compute() {
 		// TODO Auto-generated method stub
@@ -33,6 +46,11 @@ public class Worker extends RecursiveTask<Integer>{
 		}
 	}
 	
+	/**
+	 * Compute sum.
+	 *
+	 * @return the int
+	 */
 	private int computeSum(){
 		int sum = 0;
 		for(int i = start ; i <= end ; i++){

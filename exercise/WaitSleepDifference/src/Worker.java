@@ -3,15 +3,30 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Worker.
+ * TRies to acquire locks of Object the sleeping and waiting threads have already acquired. Also notifies the waiting thread.
+ */
 public class Worker implements Runnable {
 
+	/** The obj 2. */
 	private Object obj1,obj2;
 	
+	/**
+	 * Instantiates a new worker.
+	 *
+	 * @param obj1 the obj 1
+	 * @param obj2 the obj 2
+	 */
 	public Worker(Object obj1, Object obj2) {
 		this.obj1 = obj1;
 		this.obj2 = obj2;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub

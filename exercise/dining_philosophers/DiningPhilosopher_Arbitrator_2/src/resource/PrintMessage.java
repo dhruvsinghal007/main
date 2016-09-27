@@ -9,17 +9,32 @@ import java.util.concurrent.LinkedBlockingQueue;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PrintMessage.
+ */
 public class PrintMessage implements Runnable{
 	
+	/** The message blocking queue. */
 	private static BlockingQueue<Message> bQueue;
+	
+	/** The map to pair id and message. */
 	private Map<String, String> map;
+	
+	/** The Constant logger. */
 	static final Logger logger = Logger.getLogger(PrintMessage.class);
 	
+	/**
+	 * Instantiates a new printMessage.
+	 */
 	public PrintMessage() {
 		PrintMessage.bQueue = new LinkedBlockingQueue<Message>();
 		this.map = new HashMap<String, String>();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -38,6 +53,12 @@ public class PrintMessage implements Runnable{
 		}
 	}
 	
+	/**
+	 * Prints the map.
+	 *
+	 * @param id the id
+	 * @param status the status
+	 */
 	public static void print(String id, String status){
 		Message message = new Message(id, status);
 		try {

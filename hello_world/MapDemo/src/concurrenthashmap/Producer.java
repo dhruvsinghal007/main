@@ -1,23 +1,30 @@
-/**
- * 
- */
 package concurrenthashmap;
 
 import java.util.Map;
 
+// TODO: Auto-generated Javadoc
 /**
- * class to put elements in map
- * @author Dhruv
+ * class to put elements in map.
  *
+ * @author Dhruv
  */
 public class Producer implements Runnable {
 
+	/** The map. */
 	private Map<Integer, String> map ;
 	
+	/**
+	 * Instantiates a new producer.
+	 *
+	 * @param map the map
+	 */
 	public Producer(Map<Integer, String> map) {
 		this.map = map;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub

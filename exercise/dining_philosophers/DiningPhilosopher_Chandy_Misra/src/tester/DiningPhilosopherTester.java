@@ -4,13 +4,21 @@ import resource.Fork;
 import resource.ForkState;
 import thread.Philosopher;
 
+// TODO: Auto-generated Javadoc
 /**
+ * Class DiningPhilosopherTester
  * at first all forks are dirty and assigned to the left philosopher. All philosophers have 
  * reference to left and right philosophers and forks.
  * @author Dhruv
  *
  */
 public class DiningPhilosopherTester {
+	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		
 		Philosopher[] philosophers = new Philosopher[]{

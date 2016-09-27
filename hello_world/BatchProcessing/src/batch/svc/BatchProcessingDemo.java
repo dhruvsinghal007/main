@@ -1,18 +1,22 @@
 package batch.svc;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
 import batch.thread.Processor;
 import batch.thread.Producer;
 import batch.thread.Consumer;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class BatchProcessingDemo.
+ */
 public class BatchProcessingDemo {
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		BlockingQueue<String> bq1 = new LinkedBlockingQueue<String>();

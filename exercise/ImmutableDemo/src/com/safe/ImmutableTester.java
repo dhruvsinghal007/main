@@ -1,7 +1,16 @@
 package com.safe;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ImmutableTester.
+ */
 public class ImmutableTester {
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ImmutableClass safeObject = new ImmutableClass(1, " Fixed String", 

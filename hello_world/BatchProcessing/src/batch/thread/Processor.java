@@ -1,34 +1,49 @@
 package batch.thread;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Processor.
+ */
 public class Processor implements Runnable {
 
-	private BlockingQueue<String> inputQ;
-	private ThreadPoolExecutor executor;
-	private BlockingQueue<String> outputQ;
+	/** The input blocking queue. */
+	private BlockingQueue<String> inputBlockingQueue;
 	
+	/** The executor. */
+	private ThreadPoolExecutor executor;
+	
+	/** The output blocking queue. */
+	private BlockingQueue<String> outputBlockingQueue;
+	
+	/**
+	 * Instantiates a new processor.
+	 *
+	 * @param bq the blocking queue
+	 * @param res the blocking queue
+	 */
 	public Processor(BlockingQueue<String> bq , 
 						BlockingQueue<String> res ) {
 		// TODO Auto-generated constructor stub
-		inputQ = bq;
+		inputBlockingQueue = bq;
 		executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(7);
-		outputQ = res;
+		outputBlockingQueue = res;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public synchronized void run() {
 		// TODO Auto-generated method stub
 		while(true){
 			try {
-				String str = inputQ.take();
+				String str = inputBlockingQueue.take();
 				
-				executor.submit(new Worker(outputQ, str));
+				executor.submit(new Worker(outputBlockingQueue, str));
 				
 				Thread.sleep(5000);
 			} catch (InterruptedException e1) {

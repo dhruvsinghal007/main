@@ -6,17 +6,28 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+// TODO: Auto-generated Javadoc
 /**
+ * The class ListEditor
  * Creates a array list with initial size 10, and two main methods to interact with it. Both methods block 
  * their execution conditionally.
  * @author Dhruv
  *
  */
 public class ListEditor {
+	
+	/** The list. */
 	private List<Integer> list;
+	
+	/** The lock. */
 	private Lock lock;
+	
+	/** Two Condition objects for testing full and emptiness. */
 	private Condition isFull, isEmpty;
 	
+	/**
+	 * Instantiates a new list editor.
+	 */
 	public ListEditor() {
 		list = new ArrayList<Integer>(10);
 		lock = new ReentrantLock();
@@ -24,6 +35,11 @@ public class ListEditor {
 		isFull = lock.newCondition();
 	}
 	
+	/**
+	 * Adds the element.
+	 *
+	 * @param ele the integer
+	 */
 	public void addElement(Integer ele){
 		lock.lock();
 		try {
@@ -46,6 +62,9 @@ public class ListEditor {
 		
 	}
 	
+	/**
+	 * Removes the element.
+	 */
 	public void removeElement(){
 		lock.lock();
 		try {
@@ -66,6 +85,9 @@ public class ListEditor {
 		}
 	}
 	
+	/**
+	 * Display the list
+	 */
 	public void display(){
 		for(int i : list){
 			System.out.print(i + " ");

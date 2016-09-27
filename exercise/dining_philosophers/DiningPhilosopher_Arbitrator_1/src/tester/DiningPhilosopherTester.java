@@ -8,7 +8,17 @@ import resource.ForkState;
 import resource.Waiter;
 import thread.Philosopher;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DiningPhilosopherTester.
+ */
 public class DiningPhilosopherTester {
+	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		
 		Fork[] forks = {

@@ -2,14 +2,27 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Worker.
+ */
 public class Worker implements Runnable {
 
+	/** The barrier. */
 	private CyclicBarrier barrier;
 	
+	/**
+	 * Instantiates a new worker.
+	 *
+	 * @param barrier the barrier
+	 */
 	public Worker(CyclicBarrier barrier) {
 		this.barrier = barrier;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub

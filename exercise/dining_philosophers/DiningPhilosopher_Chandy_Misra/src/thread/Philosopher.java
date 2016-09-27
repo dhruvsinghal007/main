@@ -8,7 +8,9 @@ import org.apache.log4j.xml.DOMConfigurator;
 import resource.Fork;
 import resource.ForkState;
 
+// TODO: Auto-generated Javadoc
 /**
+ * Class Philosopher
  * to create a thread for each philosopher, who talks to either of left or right or both 
  * philosophers, and those philosophers will conditionally hand over the shared fork.
  * @author Dhruv
@@ -16,17 +18,32 @@ import resource.ForkState;
  */
 public class Philosopher implements Runnable{
 
+	/** The id. */
 	private int id;
+	
+	/** The right philosopher. */
 	private Philosopher leftPhilosopher,rightPhilosopher;
+	
+	/** The right fork. */
 	private Fork leftFork,rightFork;
+	
+	/** The Constant logger. */
 	static final Logger logger = Logger.getLogger(Philosopher.class);
 	
+	/**
+	 * Instantiates a new philosopher.
+	 *
+	 * @param id the id
+	 */
 	public Philosopher(int id) {
 		this.id = id;
 		URL u = Philosopher.class.getClassLoader().getResource("log4j-config.xml");
         DOMConfigurator.configure(u);
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		while(true){
@@ -35,20 +52,40 @@ public class Philosopher implements Runnable{
 		}
 	}
 	
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	public int getId() {
 		return id;
 	}
 	
+	/**
+	 * Sets the forks.
+	 *
+	 * @param lFork the l fork
+	 * @param rFork the r fork
+	 */
 	public void setForks(Fork lFork, Fork rFork) {
 		leftFork = lFork;
 		rightFork = rFork;
 	}
 	
+	/**
+	 * Sets the philosophers.
+	 *
+	 * @param lPhilosopher the l philosopher
+	 * @param rPhilosopher the r philosopher
+	 */
 	public void setPhilosophers(Philosopher lPhilosopher, Philosopher rPhilosopher) {
 		leftPhilosopher = lPhilosopher;
 		rightPhilosopher = rPhilosopher;
 	}
 	
+	/**
+	 * Think.
+	 */
 	private void think(){
 		//System.out.print("\nThinking : " + Thread.currentThread().getName());
 		logger.info("\nThinking : " + Thread.currentThread().getName());
@@ -59,6 +96,9 @@ public class Philosopher implements Runnable{
 		}
 	}
 	
+	/**
+	 * Eat.
+	 */
 	private void eat(){
 		synchronized (leftFork) {
 			synchronized (rightFork) {
@@ -79,6 +119,9 @@ public class Philosopher implements Runnable{
 		}
 	}
 	
+	/**
+	 * Request forks.
+	 */
 	private void requestForks(){
 		synchronized (leftFork) {
 			if(leftFork.getPhilosopherId() != id){
@@ -95,6 +138,11 @@ public class Philosopher implements Runnable{
 		}
 	}
 	
+	/**
+	 * Give forks.
+	 *
+	 * @param philosopher the philosopher
+	 */
 	private void giveForks(Philosopher philosopher){
 		if(leftPhilosopher.getId() == philosopher.getId()){
 			if(leftFork.getState() == ForkState.DIRTY){

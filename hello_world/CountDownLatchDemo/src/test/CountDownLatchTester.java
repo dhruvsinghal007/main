@@ -7,7 +7,9 @@ import java.util.concurrent.TimeUnit;
 
 import thread.Worker;
 
+// TODO: Auto-generated Javadoc
 /**
+ * Class CountDownLatchTester
  * class to implement CountDownLatch for three threads. Main thread keeps waiting
  *  for the five threads to complete their job. It prints the final message after
  *  then
@@ -15,6 +17,11 @@ import thread.Worker;
 
 public class CountDownLatchTester {
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		CountDownLatch latch = new CountDownLatch(5);

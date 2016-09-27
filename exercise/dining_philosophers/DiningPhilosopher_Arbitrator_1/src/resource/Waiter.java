@@ -13,7 +13,9 @@ import org.apache.log4j.xml.DOMConfigurator;
 
 import thread.Philosopher;
 
+// TODO: Auto-generated Javadoc
 /**
+ * Class Waiter
  * waiter keeps the lock and does synchronization on every request, updates the fork states
  * after each request if successful and interacts with philosopher. Only one at a time is allowed
  * to eat
@@ -21,12 +23,29 @@ import thread.Philosopher;
  *
  */
 public class Waiter{
+	
+	/** The forks. */
 	private Fork[] forks;
+	
+	/** The semaphore. */
 	private Semaphore semaphore;
+	
+	/** The philosopher queue. */
 	private BlockingQueue<Philosopher> queue;
+	
+	/** The latch. */
 	private CountDownLatch latch;
+	
+	/** The Constant logger. */
 	static final Logger logger = Logger.getLogger(Waiter.class);
 	
+	/**
+	 * Instantiates a new waiter.
+	 *
+	 * @param forks the forks
+	 * @param semaphore the semaphore
+	 * @param latch the latch
+	 */
 	public Waiter(Fork[] forks, Semaphore semaphore, CountDownLatch latch) {
 		// TODO Auto-generated constructor stub
 		this.forks = forks;
@@ -37,6 +56,11 @@ public class Waiter{
         DOMConfigurator.configure(u);
 	}
 	
+	/**
+	 * Adds the request.
+	 *
+	 * @param philosopher the philosopher
+	 */
 	public void addRequest(Philosopher philosopher){
 		try {
 			queue.put(philosopher);
@@ -46,6 +70,9 @@ public class Waiter{
 		giveForks();
 	}
 	
+	/**
+	 * Give forks to front philosopher in queue.
+	 */
 	private void giveForks(){
 		try {
 			semaphore.acquire();
@@ -74,6 +101,11 @@ public class Waiter{
 		}
 	}
 	
+	/**
+	 * Take forks from philosopher that finishes eating.
+	 *
+	 * @param list the list
+	 */
 	public void takeForks(List<Fork> list){
 		for(Fork fork : list){
 			for(int i = 0 ; i < forks.length ; i++){

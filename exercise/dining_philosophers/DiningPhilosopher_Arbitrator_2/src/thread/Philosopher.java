@@ -5,7 +5,9 @@ import java.util.List;
 import resource.Fork;
 import resource.PrintMessage;
 
+// TODO: Auto-generated Javadoc
 /**
+ * Class Philosopher
  * to create a thread for each philosopher, each one of them requests waiter for forks, if available
  * eat and return forks.
  * @author Dhruv
@@ -13,24 +15,47 @@ import resource.PrintMessage;
  */
 public class Philosopher implements Runnable{
 
+	/** The id. */
 	private int id;
-	private Waiter waiter;
 	
-	public void setForks(List<Fork> forks) {
-		this.forks = forks;
-	}
+	/** The waiter. */
+	private Waiter waiter;
 
+	/** The forks. */
 	private List<Fork> forks;
 	
+	/**
+	 * Instantiates a new philosopher.
+	 *
+	 * @param id the id
+	 * @param waiter the waiter
+	 */
 	public Philosopher(int id, Waiter waiter) {
 		this.id = id;
 		this.waiter = waiter;
 	}
 	
+	/**
+	 * Sets the forks.
+	 *
+	 * @param forks the new forks
+	 */
+	public void setForks(List<Fork> forks) {
+		this.forks = forks;
+	}
+	
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	public int getId() {
 		return id;
 	}
 	
+	/**
+	 * Think.
+	 */
 	private synchronized void think(){
 		try {
 			long time = (long) (Math.random() * 10000);
@@ -41,6 +66,11 @@ public class Philosopher implements Runnable{
 		}
 	}
 	
+	/**
+	 * Eat.
+	 *
+	 * @return true, if successful
+	 */
 	private synchronized boolean eat(){
 		if(forks == null || forks.size() < 2){
 			synchronized (this) {
@@ -64,6 +94,11 @@ public class Philosopher implements Runnable{
 		return false;
 	}
 	
+	/**
+	 * Release forks.
+	 *
+	 * @param flag the flag
+	 */
 	private synchronized void releaseForks(boolean flag){
 		if(flag){
 			PrintMessage.print("p"+id, " Released forks. ");
@@ -72,6 +107,9 @@ public class Philosopher implements Runnable{
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		while(true){

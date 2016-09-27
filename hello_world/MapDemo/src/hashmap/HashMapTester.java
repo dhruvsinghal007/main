@@ -2,8 +2,17 @@ package hashmap;
 
 import java.util.LinkedHashMap;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class HashMapTester.
+ */
 public class HashMapTester {
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		HashMapImpl test = new  HashMapImpl(new LinkedHashMap<String, String>());
 		

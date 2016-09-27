@@ -1,14 +1,28 @@
 import java.util.concurrent.CompletionService;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Producer.
+ * adds new tasks into completion service.
+ */
 public class Producer implements Runnable {
 	
+	/** The service. */
 	private CompletionService<Integer> service;
 
+	/**
+	 * Instantiates a new producer.
+	 *
+	 * @param service the completion service
+	 */
 	public Producer(CompletionService<Integer> service) {
 		this.service = service;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub

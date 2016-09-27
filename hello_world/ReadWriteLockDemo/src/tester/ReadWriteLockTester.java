@@ -4,8 +4,17 @@ import resource.FileResource;
 import thread.Reader;
 import thread.Writer;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ReadWriteLockTester.
+ */
 public class ReadWriteLockTester {
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		

@@ -2,14 +2,28 @@ package blkqueue;
 
 import java.util.concurrent.BlockingQueue;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RemoveThread.
+ */
 public class RemoveThread implements Runnable {
 
+	/** The b queue. */
 	BlockingQueue<Integer> bQueue;
+	
+	/**
+	 * Instantiates a new removes the thread.
+	 *
+	 * @param bQueue the blocking queue
+	 */
 	public RemoveThread(BlockingQueue<Integer> bQueue) {
 		// TODO Auto-generated constructor stub
 		this.bQueue = bQueue;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	public void run() {
 		// TODO Auto-generated method stub
 		while(true){

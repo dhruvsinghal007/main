@@ -11,7 +11,9 @@ import resource.ForkState;
 import resource.PrintMessage;
 import thread.Philosopher;
 
+// TODO: Auto-generated Javadoc
 /**
+ * Class Waiter
  * waiter keeps the lock and does synchronization on every request and also keeps the track of requests, 
  * updates the fork states after each request if successful and interacts with philosopher. More than 
  * one can eat if their forks are available
@@ -19,14 +21,29 @@ import thread.Philosopher;
  *
  */
 public class Waiter implements Runnable{
+	
+	/** The forks. */
 	private Fork[] forks;
+	
+	/** The queue. */
 	private BlockingQueue<Philosopher> queue;
+	
+	/**
+	 * Instantiates a new waiter.
+	 *
+	 * @param forks the forks
+	 */
 	public Waiter(Fork[] forks) {
 		this.forks = forks;
 		queue = new LinkedBlockingQueue<Philosopher>();
 		new Semaphore(1);
 	}
 	
+	/**
+	 * Adds the request.
+	 *
+	 * @param philosopher the philosopher
+	 */
 	public synchronized void addRequest(Philosopher philosopher){
 		try {
 			if(!(queue.contains(philosopher))){
@@ -37,6 +54,9 @@ public class Waiter implements Runnable{
 		}
 	}
 
+	/**
+	 * Give forks to the philosopher in front of queue.
+	 */
 	/*
 	 * find the appropriate forks, check their availability and if both available,
 	 * update their status to not available
@@ -79,6 +99,11 @@ public class Waiter implements Runnable{
 		}
 	}
 	
+	/**
+	 * Take forks.
+	 *
+	 * @param list the list
+	 */
 	/*
 	 * only called when philosopher calls. So it is guaranteed that both forks will be there ,
 	 * just update their status to available.
@@ -95,6 +120,9 @@ public class Waiter implements Runnable{
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub

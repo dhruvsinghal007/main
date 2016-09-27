@@ -3,14 +3,28 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SleepThread.
+ * Acquires lock over Object and sleeps for 10 sec.
+ */
 public class SleepThread implements Runnable {
 	
+/** The obj. */
 private Object obj;
 	
+	/**
+	 * Instantiates a new sleep thread.
+	 *
+	 * @param obj the obj
+	 */
 	public SleepThread(Object obj) {
 		this.obj = obj;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub

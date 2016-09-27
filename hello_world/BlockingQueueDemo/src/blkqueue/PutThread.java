@@ -2,15 +2,28 @@ package blkqueue;
 
 import java.util.concurrent.BlockingQueue;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PutThread.
+ */
 public class PutThread implements Runnable{
 
+	/** The b queue. */
 	BlockingQueue<Integer> bQueue;
 	
+	/**
+	 * Instantiates a new put thread.
+	 *
+	 * @param bq the blocking queue
+	 */
 	public PutThread(BlockingQueue<Integer> bq) {
 		// TODO Auto-generated constructor stub
 		bQueue = bq;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	public void run() {
 		// TODO Auto-generated method stub
 		int i = 1;

@@ -2,8 +2,17 @@ package treemap;
 
 import java.util.TreeMap;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TreeMapTester.
+ */
 public class TreeMapTester {
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		TreeMapImpl test = new  TreeMapImpl(new TreeMap<String, Integer>());
 		
