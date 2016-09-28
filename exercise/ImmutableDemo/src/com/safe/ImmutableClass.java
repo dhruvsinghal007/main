@@ -2,10 +2,7 @@ package com.safe;
 
 // TODO: Auto-generated Javadoc
 /**
- * Immutable class which can not be modified, contains an int, a String and an object
- * of MutableClass.
- *
- * @author User
+ * Immutable class which can not be modified, contains an int, a String and an object of MutableClass.
  */
 public final class ImmutableClass {
 	

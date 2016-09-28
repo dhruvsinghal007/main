@@ -3,6 +3,7 @@ package com.single;
 // TODO: Auto-generated Javadoc
 /**
  * The Class SingletonTester.
+ * Attempts to create two objects of singleton. Since the constructor of SingletonClass is private, so static factory method is used to return the instance. So in the end there are two references referring to single object. 
  */
 public class SingletonTester {
 

@@ -9,6 +9,7 @@ import batch.thread.Consumer;
 // TODO: Auto-generated Javadoc
 /**
  * The Class BatchProcessingDemo.
+ * Creates two blocking queues, one for input from user, and other for processed inputs. Then create a producer thread, a consumer thread and a worker thread. Producer takes input from user (here just some initialized strings) and puts them in the input blocking queue, processor takes elements from input blocking queue and converts them into final outputs and also puts the final output in output blocking queue. The consumer finally takes the output from output queue and displays it. 
  */
 public class BatchProcessingDemo {
 

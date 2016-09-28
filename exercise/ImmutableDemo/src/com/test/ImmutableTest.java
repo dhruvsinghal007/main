@@ -10,15 +10,9 @@ import com.safe.MutableClass;
 // TODO: Auto-generated Javadoc
 /**
  * Class ImmutableTest
- * The immutable class defined has three members : int , String and MutableClass obj
- * Out of these, only mutable object needs to be tested because others would not
- * have changed anyway.
+ * The immutable class defined has three members : int , String and MutableClass obj. Out of these, only mutable object needs to be tested because others would not have changed anyway.
  * 
- * This class is intended to test if immutable object member of immutable class can
- * still be changed or not.
- * 
- * @author User
- *
+ * This class is intended to test if immutable object member of immutable class can still be changed or not.
  */
 public class ImmutableTest {
 

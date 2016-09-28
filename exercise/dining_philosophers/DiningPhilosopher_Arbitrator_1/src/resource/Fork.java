@@ -3,7 +3,7 @@ package resource;
 // TODO: Auto-generated Javadoc
 /**
  * Class Fork
- * class describes the possible functionalities of a fork. 
+ * Class describes the possible functionalities of a fork. A fork has a unique id, non-unique states and getters and setter for state.
  * @author Dhruv
  *
  */

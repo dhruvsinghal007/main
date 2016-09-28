@@ -9,6 +9,7 @@ import thread.Waiter;
 // TODO: Auto-generated Javadoc
 /**
  * The Class DiningPhilosopherTester.
+ * Implements enhanced version of arbitrator solution for dining philosophers problem. Here more than one philosophers are allowed to eat at a time, but here also waiter is interacting with philosophers for dining.
  */
 public class DiningPhilosopherTester {
 	

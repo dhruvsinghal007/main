@@ -2,7 +2,7 @@ package resource;
 
 // TODO: Auto-generated Javadoc
 /**
- * enum for possible states for a fork.
+ * enum for possible states for a fork. values are for available and not available
  *
  * @author Dhruv
  */

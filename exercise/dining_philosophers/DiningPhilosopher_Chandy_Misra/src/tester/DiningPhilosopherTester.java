@@ -7,8 +7,7 @@ import thread.Philosopher;
 // TODO: Auto-generated Javadoc
 /**
  * Class DiningPhilosopherTester
- * at first all forks are dirty and assigned to the left philosopher. All philosophers have 
- * reference to left and right philosophers and forks.
+ * Implements Chandy Misra solution for dining philosophers problem. At first all forks are dirty and assigned to the left philosopher. All philosophers have reference to left and right philosophers and forks. If a request comes to a philosopher he gives the fork if the fork if dirty by first updating it to clean.
  * @author Dhruv
  *
  */

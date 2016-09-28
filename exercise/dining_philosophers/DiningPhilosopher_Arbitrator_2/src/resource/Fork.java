@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 // TODO: Auto-generated Javadoc
 /**
  * Class Fork
- * class describes the possible functionalities of a fork. 
+ * class describes the possible functionalities of a fork. Has id, state, readwrite lock (for thread safety)
  * @author Dhruv
  *
  */

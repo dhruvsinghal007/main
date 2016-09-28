@@ -16,11 +16,8 @@ import thread.Philosopher;
 // TODO: Auto-generated Javadoc
 /**
  * Class Waiter
- * waiter keeps the lock and does synchronization on every request, updates the fork states
- * after each request if successful and interacts with philosopher. Only one at a time is allowed
- * to eat
- * @author Dhruv
- *
+ * waiter keeps the lock and does synchronization on every request, updates the fork status after each request if successful and interacts with philosopher. Only one philosopher at a time is allowed to eat. Also logs the output to a file.
+ * @author Dhruv 
  */
 public class Waiter{
 	
@@ -36,15 +33,15 @@ public class Waiter{
 	/** The latch. */
 	private CountDownLatch latch;
 	
-	/** The Constant logger. */
+	/** The Constant logger for logging. */
 	static final Logger logger = Logger.getLogger(Waiter.class);
 	
 	/**
-	 * Instantiates a new waiter.
+	 * Instantiates a new waiter, and also the DOMConfigurator for logging.
 	 *
-	 * @param forks the forks
+	 * @param forks the forks array
 	 * @param semaphore the semaphore
-	 * @param latch the latch
+	 * @param latch the countdown latch
 	 */
 	public Waiter(Fork[] forks, Semaphore semaphore, CountDownLatch latch) {
 		// TODO Auto-generated constructor stub
@@ -71,7 +68,7 @@ public class Waiter{
 	}
 	
 	/**
-	 * Give forks to front philosopher in queue.
+	 * Give forks to front philosopher in queue by first acquiring a lock over semaphore and then checking the availability of the two requested forks. If they are available, update the list fork of philosopher, and also the status of forks to not available. 
 	 */
 	private void giveForks(){
 		try {
@@ -102,7 +99,7 @@ public class Waiter{
 	}
 	
 	/**
-	 * Take forks from philosopher that finishes eating.
+	 * Take forks from philosopher that finishes eating. Releases the semaphore lock immediately after receiving the forks. Also updates the status of forks again to available.
 	 *
 	 * @param list the list
 	 */

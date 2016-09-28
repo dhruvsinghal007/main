@@ -2,6 +2,7 @@
 // TODO: Auto-generated Javadoc
 /**
  * The Class WaitSleepDifferenceTester.
+ * Creates instances of WaitThread, SleepThread, and Worker and relative three threads for them and starts them all. 
  */
 public class WaitSleepDifferenceTester {
 

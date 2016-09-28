@@ -5,6 +5,7 @@ import java.util.concurrent.BlockingQueue;
 // TODO: Auto-generated Javadoc
 /**
  * The Class Worker.
+ * Has the job to take string processed by processor and then puts into output blocking queue.
  */
 public class Worker implements Runnable {
 
@@ -17,8 +18,8 @@ public class Worker implements Runnable {
 	/**
 	 * Instantiates a new worker.
 	 *
-	 * @param bq the bq
-	 * @param msg the msg
+	 * @param bq the output blocking queue
+	 * @param msg the message string
 	 */
 	public Worker(BlockingQueue<String> bq, String msg) {
 		// TODO Auto-generated constructor stub

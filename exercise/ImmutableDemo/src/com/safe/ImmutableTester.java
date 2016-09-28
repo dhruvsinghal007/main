@@ -3,6 +3,7 @@ package com.safe;
 // TODO: Auto-generated Javadoc
 /**
  * The Class ImmutableTester.
+ * Create an instance of ImmutableClass and display the contents
  */
 public class ImmutableTester {
 

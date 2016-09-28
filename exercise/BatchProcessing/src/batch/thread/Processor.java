@@ -7,13 +7,14 @@ import java.util.concurrent.ThreadPoolExecutor;
 // TODO: Auto-generated Javadoc
 /**
  * The Class Processor.
+ * Takes string from input blocking queue, processes them and then creates a new worker to do the job of processing string and putting into output blocking queue.
  */
 public class Processor implements Runnable {
 
 	/** The input blocking queue. */
 	private BlockingQueue<String> inputBlockingQueue;
 	
-	/** The executor. */
+	/** The executor to create threads. */
 	private ThreadPoolExecutor executor;
 	
 	/** The output blocking queue. */
@@ -47,7 +48,6 @@ public class Processor implements Runnable {
 				
 				Thread.sleep(5000);
 			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 				

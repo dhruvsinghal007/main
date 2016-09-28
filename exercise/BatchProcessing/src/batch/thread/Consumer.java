@@ -5,6 +5,7 @@ import java.util.concurrent.BlockingQueue;
 // TODO: Auto-generated Javadoc
 /**
  * The Class Consumer.
+ * Has the job to take string messages from final blocking queue and display them. After that sleep for 5 sec.
  */
 public class Consumer implements Runnable {
 
@@ -33,7 +34,6 @@ public class Consumer implements Runnable {
 				System.out.println("\n" + res);
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

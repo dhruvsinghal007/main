@@ -14,9 +14,7 @@ import thread.Philosopher;
 // TODO: Auto-generated Javadoc
 /**
  * Class Waiter
- * waiter keeps the lock and does synchronization on every request and also keeps the track of requests, 
- * updates the fork states after each request if successful and interacts with philosopher. More than 
- * one can eat if their forks are available
+ * waiter keeps the lock and does synchronization on every request and also keeps the track of requests, updates the fork status after each request if successful and interacts with philosopher. More than one can eat if their forks are available for them.
  * @author Dhruv
  *
  */

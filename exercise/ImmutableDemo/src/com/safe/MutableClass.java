@@ -4,7 +4,6 @@ package com.safe;
 /**
  * Class MutableClass
  * normal class which can be modified.
- * @author User
  *
  */
 public class MutableClass {

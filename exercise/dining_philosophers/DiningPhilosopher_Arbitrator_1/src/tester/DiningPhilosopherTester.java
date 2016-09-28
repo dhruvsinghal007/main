@@ -11,6 +11,7 @@ import thread.Philosopher;
 // TODO: Auto-generated Javadoc
 /**
  * The Class DiningPhilosopherTester.
+ * Implements the classic version of arbitrator solution for dining philosophers problem,in which only one philosopher is allowed to eat at a time, and waiter interacts with philosophers to do the dining.
  */
 public class DiningPhilosopherTester {
 	

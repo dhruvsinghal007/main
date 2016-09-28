@@ -3,7 +3,7 @@ package volume;
 // TODO: Auto-generated Javadoc
 /**
  * Class Cuboid
- * contains three fields and equals and hashCode method are overridden over these fields.
+ * contains three fields, and equals and hashCode method are overridden over these fields.
  * @author Dhruv
  *
  */

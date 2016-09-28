@@ -5,11 +5,12 @@ import java.util.concurrent.BlockingQueue;
 // TODO: Auto-generated Javadoc
 /**
  * The Class Producer.
+ * Takes input, then creates a new worker thread to do the job of putting string message into input blocking queue.
  */
 public class Producer implements Runnable{
 
-	/** The blocking queue bQueue. */
-	private BlockingQueue<String> bQueue;
+	/** The input blocking queue. */
+	private BlockingQueue<String> inputBlockingQueue;
 	
 	/**
 	 * Gets the blocking queue reference.
@@ -17,7 +18,7 @@ public class Producer implements Runnable{
 	 * @return the bQueue
 	 */
 	public BlockingQueue<String> getbQueue() {
-		return bQueue;
+		return inputBlockingQueue;
 	}
 
 	/**
@@ -27,7 +28,7 @@ public class Producer implements Runnable{
 	 */
 	public Producer(BlockingQueue<String> bq) {
 		// TODO Auto-generated constructor stub
-		bQueue = bq;
+		inputBlockingQueue = bq;
 	}
 	
 	/* (non-Javadoc)
@@ -41,13 +42,12 @@ public class Producer implements Runnable{
 			try {
 				String msg = "Message " + i;
 				System.out.println("\nString added : " + msg);
-				bQueue.put(msg);
-				for(String str : bQueue){
+				inputBlockingQueue.put(msg);
+				for(String str : inputBlockingQueue){
 					System.out.print(str + " ");
 				}
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			i++;

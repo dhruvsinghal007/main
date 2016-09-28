@@ -1,7 +1,7 @@
 // TODO: Auto-generated Javadoc
 /**
  * Class Resource
- *
+ * Contains a volatile member and threadId
  * @author Dhruv
  */
 public class Resource {

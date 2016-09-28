@@ -2,6 +2,7 @@
 // TODO: Auto-generated Javadoc
 /**
  * The Class SequentialIncremental.
+ * Just createsd three threads. Can create as many as desired. Just set the philosopher id's in circular fashion.
  */
 public class SequentialIncremental {
 

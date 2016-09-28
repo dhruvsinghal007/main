@@ -3,7 +3,7 @@ package resource;
 // TODO: Auto-generated Javadoc
 /**
  * Class Fork
- * class describes the possible functionalities of a fork. 
+ * class describes the possible functionalities of a fork. Has id, state and philosopher id.
  * @author Dhruv
  *
  */

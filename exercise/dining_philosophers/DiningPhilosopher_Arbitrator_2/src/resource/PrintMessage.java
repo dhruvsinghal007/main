@@ -12,6 +12,7 @@ import org.apache.log4j.xml.DOMConfigurator;
 // TODO: Auto-generated Javadoc
 /**
  * The Class PrintMessage.
+ * Maintains a map of id-message pairs. Every time a request comes, it is added into blocking queue, and every element of blocking queue is then retrieved one at a time and put into map. The whole map is printed after each updation.
  */
 public class PrintMessage implements Runnable{
 	
@@ -25,7 +26,7 @@ public class PrintMessage implements Runnable{
 	static final Logger logger = Logger.getLogger(PrintMessage.class);
 	
 	/**
-	 * Instantiates a new printMessage.
+	 * Instantiates a new printMessage with map and blocking queue.
 	 */
 	public PrintMessage() {
 		PrintMessage.bQueue = new LinkedBlockingQueue<Message>();
@@ -34,6 +35,7 @@ public class PrintMessage implements Runnable{
 
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
+	 * retrieves top element from blocking queue and updates map. After that logs the whole map.
 	 */
 	@Override
 	public void run() {
@@ -54,7 +56,7 @@ public class PrintMessage implements Runnable{
 	}
 	
 	/**
-	 * Prints the map.
+	 * puts the incoming message request with id into blocking queue for printing.
 	 *
 	 * @param id the id
 	 * @param status the status

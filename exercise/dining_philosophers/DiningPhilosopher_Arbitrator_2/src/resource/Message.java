@@ -2,7 +2,8 @@ package resource;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class Message.
+ * The Class Message. 
+ * Contains message id and message status and their getters and setters. 
  */
 public class Message {
 	

@@ -1,7 +1,7 @@
 // TODO: Auto-generated Javadoc
 /**
  *Class Worker.
- *Able to create as many threads as desired, to print the integers sequentially
+ *Able to create as many threads as desired, to print the integers sequentially. Just check the thread id... increment the resource's integer and set the new value back to it... all operations done in thread-safe manner.
  * 
  * @author Dhruv
  */

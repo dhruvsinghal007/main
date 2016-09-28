@@ -11,8 +11,7 @@ import resource.ForkState;
 // TODO: Auto-generated Javadoc
 /**
  * Class Philosopher
- * to create a thread for each philosopher, who talks to either of left or right or both 
- * philosophers, and those philosophers will conditionally hand over the shared fork.
+ * Create a thread for each philosopher, who talks to either of left or right or both philosophers, and those philosophers will conditionally hand over the shared fork.
  * @author Dhruv
  *
  */
@@ -64,8 +63,8 @@ public class Philosopher implements Runnable{
 	/**
 	 * Sets the forks.
 	 *
-	 * @param lFork the l fork
-	 * @param rFork the r fork
+	 * @param lFork the left fork
+	 * @param rFork the right fork
 	 */
 	public void setForks(Fork lFork, Fork rFork) {
 		leftFork = lFork;
@@ -75,8 +74,8 @@ public class Philosopher implements Runnable{
 	/**
 	 * Sets the philosophers.
 	 *
-	 * @param lPhilosopher the l philosopher
-	 * @param rPhilosopher the r philosopher
+	 * @param lPhilosopher the left philosopher
+	 * @param rPhilosopher the right philosopher
 	 */
 	public void setPhilosophers(Philosopher lPhilosopher, Philosopher rPhilosopher) {
 		leftPhilosopher = lPhilosopher;
@@ -84,7 +83,7 @@ public class Philosopher implements Runnable{
 	}
 	
 	/**
-	 * Think.
+	 * Think logging
 	 */
 	private void think(){
 		//System.out.print("\nThinking : " + Thread.currentThread().getName());
@@ -97,7 +96,7 @@ public class Philosopher implements Runnable{
 	}
 	
 	/**
-	 * Eat.
+	 * Eat when both forks are clean. (That's because it comes after being updated to clean from neighbor philosopher)
 	 */
 	private void eat(){
 		synchronized (leftFork) {
@@ -120,7 +119,7 @@ public class Philosopher implements Runnable{
 	}
 	
 	/**
-	 * Request forks.
+	 * Request forks if the philosopher's id of fork is not equal to current philosopher id. If both id's are equal then eat.
 	 */
 	private void requestForks(){
 		synchronized (leftFork) {
@@ -139,7 +138,7 @@ public class Philosopher implements Runnable{
 	}
 	
 	/**
-	 * Give forks.
+	 * Give forks to neighbor. If fork requested is dirty, then make it clean and pass it to neighbor, otherwise eat.
 	 *
 	 * @param philosopher the philosopher
 	 */

@@ -13,8 +13,7 @@ import resource.Waiter;
 // TODO: Auto-generated Javadoc
 /**
  * Class Philosopher
- * to create a thread for each philosopher, each one of them requests waiter for forks, if available
- * eat and return forks.
+ * Create a thread for each philosopher, each one of them requests waiter for forks, if available eat and return forks.
  * @author Dhruv
  *
  */
@@ -36,7 +35,7 @@ public class Philosopher implements Runnable{
 	static final Logger logger = Logger.getLogger(Philosopher.class);
 
 	/**
-	 * Instantiates a new philosopher.
+	 * Instantiates a new philosopher and DOMConfigurator for logging.
 	 *
 	 * @param id the id
 	 * @param waiter the waiter
@@ -69,7 +68,7 @@ public class Philosopher implements Runnable{
 	}
 	
 	/**
-	 * Think.
+	 * Think. Just a print statement and then sleep for random time less than 10 sec.
 	 */
 	private void think(){
 		//System.out.print("\nThread " + id + " thinking...");

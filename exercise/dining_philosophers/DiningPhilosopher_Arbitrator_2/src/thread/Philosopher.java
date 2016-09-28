@@ -8,8 +8,7 @@ import resource.PrintMessage;
 // TODO: Auto-generated Javadoc
 /**
  * Class Philosopher
- * to create a thread for each philosopher, each one of them requests waiter for forks, if available
- * eat and return forks.
+ * Create a thread for each philosopher, each one of them requests waiter for forks, if available eat and return forks.
  * @author Dhruv
  *
  */
@@ -54,7 +53,7 @@ public class Philosopher implements Runnable{
 	}
 	
 	/**
-	 * Think.
+	 * Print statement for Think.
 	 */
 	private synchronized void think(){
 		try {
@@ -67,7 +66,7 @@ public class Philosopher implements Runnable{
 	}
 	
 	/**
-	 * Eat.
+	 * Eat if forks are available, otherwise wait.
 	 *
 	 * @return true, if successful
 	 */
@@ -95,7 +94,7 @@ public class Philosopher implements Runnable{
 	}
 	
 	/**
-	 * Release forks.
+	 * Release forks only if eating is already done
 	 *
 	 * @param flag the flag
 	 */
