@@ -1,0 +1,77 @@
+1.> Enter select statements to: (Existing table in tutorial)
+
+Display the first name and age for everyone that's in the table.
+Display the first name, last name, and city for everyone that's not from Payson.
+Display all columns for everyone that is over 40 years old.
+Display the first and last names for everyone whose last name ends in an "ay".
+Display all columns for everyone whose first name equals "Mary".
+Display all columns for everyone whose first name contains "Mary".
+
+<Answers>
+select first,age from empinfo;
+select first,last,city from empinfo where city <> 'Payson';
+select * from empinfo where age > 40;
+select first,last from empinfo where last like '%ay';
+select * from empinfo where first = 'Mary';
+select * from empinfo where first like '%Mary%';
+
+2.>[Jonie Weber, Secretary, 28, 19500.00
+Potsy Weber, Programmer, 32, 45300.00
+Dirk Smith, Programmer II, 45, 75020.00]
+
+Enter these employees into your table first, and then insert at least 5 more of your own list of
+employees in the table.
+
+(One record answer)
+insert into employees_1302 (firstname, lastname, title, age, salary)
+values ('Jonie', 'Weber', 'Secretary', 28, 19500.00);
+
+3.>
+a. Select all columns for everyone in your employee table.
+b. Select all columns for everyone with a salary over 30000.
+c. Select first and last names for everyone that's under 30 years old.
+d. Select first name, last name, and salary for anyone with "Programmer" in their title.
+e. Select all columns for everyone whose last name contains "ebe".
+f. Select the first name for everyone whose first name equals "Potsy".
+g. Select all columns for everyone over 80 years old.
+h. Select all columns for everyone whose last name ends in "ith".
+
+<Answers>
+a. select * from employees_1302;
+b. select * from employees_1302 where salary > 30000;
+c. select firstname, lastname from employees_1302 where age > 30;
+d. select firstname, lastname, salary from employees_1302 where title like '%Programmer%';
+e. select * from employees_1302 where lastname like '%ebe%';
+f. select firstname from employees_1302 where firstname = 'Potsy';
+g. select * from employees_1302 where age > 80;
+h. select * from employees_1302 where lastname like '%ith';
+
+4.> Update statement exercises :
+Jonie Weber just got married to Bob Williams. She has requested that her last name be updated to Weber-Williams.
+Dirk Smith's birthday is today, add 1 to his age.
+All secretaries are now called "Administrative Assistant". Update all titles accordingly.
+Everyone that's making under 30000 are to receive a 3500 a year raise.
+Everyone that's making over 33500 are to receive a 4500 a year raise.
+All "Programmer II" titles are now promoted to "Programmer III".
+All "Programmer" titles are now promoted to "Programmer II".
+
+<Answers>
+update employees_1302 set lastname = 'Weber-Williams' where firstname = 'Jonie';
+update employees_1302 set age = age + 1 where firstname = 'Dirk' and lastname = 'Smith';
+update employees_1302 set title = 'Administrative Assistant' where title = 'Secretary';
+update employees_1302 set salary = salary + 3500 where salary < 30000;
+update employees_1302 set salary = salary + 4500 where salary > 33500;
+update employees_1302 set title = 'Programmer III' where title = 'Programmer II';
+update employees_1302 set title = 'Programmer II' where title = 'Programmer';
+
+5.> Delete statement exercises
+
+(Use the select statement to verify your deletes):
+
+Jonie Weber-Williams just quit, remove her record from the table.
+It's time for budget cuts. Remove all employees who are making over 70000 dollars.
+
+<Answers>
+delete from employees_1302 where lastname = 'Weber-Williams';
+delete from employees_1302 where salary > 70000;
+

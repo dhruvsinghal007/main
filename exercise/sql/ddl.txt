@@ -1,0 +1,22 @@
+1.> Create Table Exercise
+
+You have just started a new company. It is time to hire some employees. You will need to create a
+table that will contain the following information about your new employees: firstname, lastname,
+title, age, and salary. After you create the table, you should receive a small form on the screen
+with the appropriate column names. If you are missing any columns, you need to double check your
+SQL statement and recreate the table.
+
+<Answer>
+create table employees_ds1302
+(firstname varchar(30) not null,
+lastname varchar(30),
+title varchar(30),
+age number(2),
+salary number(8,2))
+
+2.> Drop Table exercises
+
+Drop your employee table.
+
+<Answer>
+drop table employees_1302;
