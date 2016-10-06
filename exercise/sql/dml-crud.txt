@@ -1,3 +1,4 @@
+-------------------------------------------------------------------------------------------------
 1.> Enter select statements to: (Existing table in tutorial)
 
 Display the first name and age for everyone that's in the table.
@@ -15,6 +16,7 @@ select first,last from empinfo where last like '%ay';
 select * from empinfo where first = 'Mary';
 select * from empinfo where first like '%Mary%';
 
+-------------------------------------------------------------------------------------------------
 2.>[Jonie Weber, Secretary, 28, 19500.00
 Potsy Weber, Programmer, 32, 45300.00
 Dirk Smith, Programmer II, 45, 75020.00]
@@ -26,6 +28,7 @@ employees in the table.
 insert into employees_1302 (firstname, lastname, title, age, salary)
 values ('Jonie', 'Weber', 'Secretary', 28, 19500.00);
 
+-------------------------------------------------------------------------------------------------
 3.>
 a. Select all columns for everyone in your employee table.
 b. Select all columns for everyone with a salary over 30000.
@@ -46,6 +49,7 @@ f. select firstname from employees_1302 where firstname = 'Potsy';
 g. select * from employees_1302 where age > 80;
 h. select * from employees_1302 where lastname like '%ith';
 
+-------------------------------------------------------------------------------------------------
 4.> Update statement exercises :
 Jonie Weber just got married to Bob Williams. She has requested that her last name be updated to Weber-Williams.
 Dirk Smith's birthday is today, add 1 to his age.
@@ -64,6 +68,7 @@ update employees_1302 set salary = salary + 4500 where salary > 33500;
 update employees_1302 set title = 'Programmer III' where title = 'Programmer II';
 update employees_1302 set title = 'Programmer II' where title = 'Programmer';
 
+-------------------------------------------------------------------------------------------------
 5.> Delete statement exercises
 
 (Use the select statement to verify your deletes):
@@ -75,8 +80,10 @@ It's time for budget cuts. Remove all employees who are making over 70000 dollar
 delete from employees_1302 where lastname = 'Weber-Williams';
 delete from employees_1302 where salary > 70000;
 
+-------------------------------------------------------------------------------------------------
 <......SQL Course Advanced.......>
-
+-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 6.> Select exercises :
 
 From the items_ordered table, select a list of all items purchased for customerid 10449. Display 
@@ -96,6 +103,7 @@ select * from items_ordered where item = 'Tent';
 select customerid, order_date, item from items_ordered where item like 'S%';
 select distinct item from items_ordered;
 
+-------------------------------------------------------------------------------------------------
 7.> Review Exercises
 
 Select the maximum price of any item ordered in the items_ordered table. 
@@ -113,6 +121,7 @@ select avg(price) from items_ordered where order_date like '%Dec%';
 select count(*) from items_ordered;
 select min(price) from items_ordered where item = 'Tent';
 
+-------------------------------------------------------------------------------------------------
 8.> Review Exercises
 
 How many people are in each unique state in the customers table? Select the state and display the 
@@ -130,6 +139,7 @@ select item, max(item), min(item) from items_ordered group by item;
 select customerid, count(customerid), sum(price) from items_ordered; 
 (A little doubt: total numbers should be sum of quantities, while in answer it is written count)
 
+-------------------------------------------------------------------------------------------------
 9.> Review Exercises 
 
 How many people are in each unique state in the customers table that have more than one person in 
@@ -148,6 +158,7 @@ select state, count(state) from customers group by state having count(state) > 1
 select item, max(item), min(item) from items_ordered group by item having max(price) > 190.00;
 select customerid, count(customerid), sum(price) from items_ordered having sum(customerid) > 1;
 
+-------------------------------------------------------------------------------------------------
 10.> Review Exercises
 
 Select the lastname, firstname, and city for all customers in the customers table. Display the 
@@ -163,6 +174,7 @@ select lastname, firstname, city from customers order by lastname;
 select lastname, firstname, city from customers order by lastname desc;
 select item, price from items_ordered where price > 10.0 order by price;
 
+-------------------------------------------------------------------------------------------------
 11.> Review Exercises
 
 Select the customerid, order_date, and item from the items_ordered table for all items unless they
@@ -177,6 +189,7 @@ where item <> 'Snow Shoes' and item <> 'Ear Muffs';
 
 select item, price from items_ordered where item like 'S%' or item like 'P%' or item like 'F%';
 
+-------------------------------------------------------------------------------------------------
 12.> Review Exercises
 
 Select the date, item, and price from the items_ordered table for all of the rows that have a 
@@ -191,6 +204,7 @@ select date, item, price from items_ordered where price between 10.0 and 80.0;
 select firstname, city, state from customers 
 where state in ('Arizona', 'Washington', 'Oklahoma', 'Colorado', 'Hawaii');
 
+-------------------------------------------------------------------------------------------------
 13.> Review Exercises
 
 Select the item and per unit price for each item in the items_ordered table. 
