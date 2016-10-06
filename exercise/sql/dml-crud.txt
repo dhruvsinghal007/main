@@ -212,3 +212,21 @@ Hint: Divide the price by the quantity.
 
 <Answers>
 select item, sum(price)/sum(quantity) from items_ordered group by item;
+
+-------------------------------------------------------------------------------------------------
+14.> Review Exercises
+
+Write a query using a join to determine which items were ordered by each of the customers in the 
+customers table. Select the customerid, firstname, lastname, order_date, item, and price for 
+everything each customer purchased in the items_ordered table.
+
+Repeat exercise #1, however display the results sorted by state in descending order.
+
+<Answers>
+select c.customerid, c.firstname, c.lastname, i.order_date, i.item, i.price
+from customers c, items_ordered i
+where c.customerid = i.customerid; 
+
+select c.customerid, c.firstname, c.lastname, c.state, i.order_date, i.item, i.price
+from customers c, items_ordered i
+where c.customerid = i.customerid order by c.state desc; 
