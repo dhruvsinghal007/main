@@ -1,0 +1,27 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `cursors`(INOUT ename varchar(30))
+BEGIN
+	DECLARE v_finished INT DEFAULT 0;
+    DECLARE v_ename varchar(30) DEFAULT "";
+    
+    DEClARE ename_cursor CURSOR FOR 
+	SELECT name FROM employees;
+    
+    DECLARE CONTINUE HANDLER 
+    FOR NOT FOUND SET v_finished = 1;
+    
+	OPEN ename_cursor;
+ 
+	get_ename: LOOP
+	 
+		FETCH ename_cursor INTO v_ename;
+		 
+		IF v_finished = 1 THEN 
+			LEAVE get_ename;
+		END IF;
+		 
+		SET ename = CONCAT(v_ename,";",ename);
+ 
+	END LOOP get_ename;
+	 
+	CLOSE ename_cursor;
+END

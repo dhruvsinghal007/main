@@ -1,0 +1,6 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `params`(IN in_name varchar(30), OUT out_salary int)
+BEGIN
+	select salary into out_salary
+    from employees
+    where name = in_name;
+END

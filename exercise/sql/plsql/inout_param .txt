@@ -1,0 +1,5 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `inout_param`(INOUT counter int)
+BEGIN
+	set counter = counter + 1;
+    select counter;
+END

@@ -1,0 +1,4 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `hello`()
+BEGIN
+	select 'HELLO WORLD !';
+END

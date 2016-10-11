@@ -1,0 +1,6 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `variables`()
+BEGIN
+	DECLARE z int;
+    select salary into z from employees where id = 1;
+    select z;
+END

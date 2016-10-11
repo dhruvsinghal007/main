@@ -1,0 +1,9 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `conditional`(IN in_salary int)
+BEGIN
+    if exists(select name
+			from employees 
+			where salary = in_salary) then
+		select "EXISTS";
+	else select "NOT FOUND";
+    end if;
+END
