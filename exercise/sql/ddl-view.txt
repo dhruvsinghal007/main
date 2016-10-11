@@ -1,0 +1,171 @@
+VIEW EXERCISES (link referred : http://www.w3resource.com/sql-exercises/view/sql-view.php)
+
+--------------------------------------------------------------------------------------
+Q1.> Write a query to create a view for those salesmen belongs to the city New York.
+ 
+A1.>
+CREATE VIEW newyorkstaff  
+AS SELECT *  
+FROM salesman  
+WHERE city = 'New York';   
+
+--------------------------------------------------------------------------------------
+Q2.> Write a query to create a view for all salesmen with columns salesman_id, name and city.
+
+A2.>
+CREATE VIEW salesown  
+ AS SELECT salesman_id, name, city  
+ FROM salesman; 
+ 
+-------------------------------------------------------------------------------------- 
+Q3.> Write a query to find the salesmen of the city New York who achieved the commission more than 
+13%.
+
+A3.>
+CREATE VIEW newyorkstaff  
+AS SELECT *  
+FROM salesman  
+WHERE city = 'New York' and commission > .13;  
+
+--------------------------------------------------------------------------------------
+Q4.> Write a query to create a view to get a count of how many customers we have at each level of 
+grade.
+
+A4.>
+CREATE VIEW customers_count  
+AS SELECT grade, count(*)  
+FROM customers  
+GROUP BY grade ;    
+
+--------------------------------------------------------------------------------------
+Q5.> Write a query to create a view to keep track the number of customers ordering, number of 
+salesmen attached, average amount of orders and total amount of orders in a day.
+
+A5.>
+CREATE VIEW totalforday  
+AS SELECT ord_date, COUNT(DISTINCT customer_id),COUNT(DISTINCT salesman_id),  
+AVG(purch_amt), SUM(purch_amt)  
+FROM orders  
+GROUP BY ord_date;  
+
+--------------------------------------------------------------------------------------
+Q6.> Write a query to create a view that shows for each order the salesman and customer by name.
+
+A6.> 
+CREATE VIEW nameorders  
+AS SELECT ord_no, purch_amt, a.salesman_id, name, cust_name  
+FROM orders a, customer b, salesman c  
+WHERE a.customer_id = b.customer_id  
+AND a.salesman_id = c.salesman_id;  
+
+--------------------------------------------------------------------------------------
+Q7.> Write a query to create a view that find the salesman who has the customer with the highest 
+order on a day.
+
+A7.>
+CREATE VIEW elitsalesman  
+AS SELECT b.ord_date, a.salesman_id, a.name  
+FROM salesman a, orders b  
+WHERE a.salesman_id = b.salesman_id  
+AND b.purch_amt =  
+    (SELECT MAX (purch_amt)  
+       FROM orders c  
+       WHERE c.ord_date = b.ord_date);  
+	   
+--------------------------------------------------------------------------------------
+Q8.> Write a query to create a view that find the salesman who has the customer with the highest 
+order at least 3 times on a day.
+
+A8.> 
+CREATE VIEW incentive  
+AS SELECT DISTINCT salesman_id, name  
+FROM elitsalesman a  
+WHERE 3 <=  
+   (SELECT COUNT (*)  
+    FROM elitsalesman b  
+    WHERE a.salesman_id = b.salesman_id); 
+	
+--------------------------------------------------------------------------------------
+Q9.> Write a query to create a view that shows all of the customers who have the highest grade.
+
+A9.>
+CREATE VIEW highgrade  
+  AS SELECT *  
+  FROM customer  
+  WHERE grade =  
+    (SELECT MAX (grade)  
+     FROM customer); 
+	 
+--------------------------------------------------------------------------------------
+Q10.> Write a query to create a view that shows the number of salesman in each city.
+
+A10.>
+CREATE VIEW citynum  
+AS SELECT city, COUNT (DISTINCT salesman_id)  
+FROM salesman  
+GROUP BY city;  
+
+--------------------------------------------------------------------------------------
+Q11.> Write a query to create a view that shows the average and total orders for each salesman 
+after his or her name. (Assume all names are unique)
+
+A11.>
+CREATE VIEW norders  
+AS SELECT name, AVG(purch_amt), SUM(purch_amt)  
+FROM salesman, orders  
+WHERE salesman.salesman_id = orders.salesman_id  
+GROUP BY orders.salesman_id;
+
+--------------------------------------------------------------------------------------
+Q12.> Write a query to create a view that shows each salesman with more than one customers.
+
+A12.>
+CREATE VIEW mcustomer  
+AS SELECT *  
+FROM salesman a  
+WHERE 1 <  
+   (SELECT COUNT(*)  
+     FROM customer b  
+     WHERE a.salesman_id = b.salesman_id);  
+	 
+--------------------------------------------------------------------------------------
+Q13.> Write a query to create a view that shows all matches of customers with salesman such that 
+at least one customer in the city of customer served by a salesman in the city of salesman.
+
+A13.>
+CREATE VIEW citymatch(custcity, salescity)  
+AS SELECT DISTINCT a.city, b.city  
+FROM customer a, salesman b  
+WHERE a.salesman_id = b.salesman_id;  
+
+--------------------------------------------------------------------------------------
+Q14.> Write a query to create a view that shows the number of orders in each day.
+
+A14.>
+CREATE VIEW dateord(ord_date, odcount)  
+AS SELECT ord_date, COUNT (*)  
+FROM orders   
+GROUP BY ord_date; 
+
+--------------------------------------------------------------------------------------
+Q15.> Write a query to create a view that find the salesmen who issued orders on 
+October 10th, 2012.
+
+A15.>
+CREATE VIEW salesmanonoct  
+AS SELECT *  
+FROM salesman  
+WHERE salesman_id IN  
+    (SELECT salesman_id  
+         FROM orders  
+         WHERE ord_date = '2012-10-10');
+
+--------------------------------------------------------------------------------------
+Q16.> Write a query to create a view that find the salesmen who issued orders on either 
+August 17th, 2012 or October 10th, 2012.
+
+A16.>
+CREATE VIEW sorder  
+AS SELECT salesman_id, ord_no, customer_id  
+FROM orders  
+WHERE ord_date IN('2012-08-17', '2012-10-10'); 
