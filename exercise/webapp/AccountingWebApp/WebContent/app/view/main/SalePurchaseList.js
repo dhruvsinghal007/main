@@ -8,9 +8,6 @@ Ext.define('Accounts.view.main.SalePurchaseList', {
     store: 'Accounts.store.SalePurchaseStore',
 	
 	initComponent : function(){
-		
-		console.log("SalePurchase");
-		
 		this.editing = Ext.create('Ext.grid.plugin.RowEditing');
 		
 		Ext.apply(this,{
@@ -34,7 +31,7 @@ Ext.define('Accounts.view.main.SalePurchaseList', {
 				{ 
 					text: 'Date', 
 					dataIndex: 'date', 
-					flex: 1, 
+					flex : 1,
 					editor : 
 					{
 						xtype : 'datefield',
@@ -43,13 +40,28 @@ Ext.define('Accounts.view.main.SalePurchaseList', {
 					},
 					renderer : Ext.util.Format.dateRenderer('d/m/Y')
 				},
-				{ text: 'Sale/Purchase', dataIndex: 'mode', flex: 1, editor : {allowBlank : true} },
+				{ 
+					text: 'Sale/Purchase', 
+					dataIndex: 'mode', 
+					flex : 1,
+					editor : 
+					{
+						xtype : 'combo',
+						allowBlank: false,
+						typeAhead : true,
+						renderTo: Ext.getBody(),
+						store : [
+							['Sale', 'Sale'],
+							['Purchase', 'Purchase']
+						]
+					}
+				},
 				{ text: 'Quantity', dataIndex: 'quantity', flex: 1, editor : {allowBlank : true} }
 			],
 			
 			tbar : [{
 				xtype : 'tbtext',
-				itemId : 'txt',
+				id : 'sptxt',
 				text : 'New'
 			}],
 			
@@ -63,23 +75,17 @@ Ext.define('Accounts.view.main.SalePurchaseList', {
 					var spStore = Ext.data.StoreManager.lookup('Accounts.store.SalePurchaseStore');
 					
 					var spModel = Ext.create("Accounts.model.SalePurchase");
-					var id = spStore.max("spId");
-					
-					id++;
-					
-					spModel.set("spId",id);
 					spModel.set("itemId",0);
 					spModel.set("quantity",0);
 					
 					var current = new Date();
 					current = Ext.Date.format(current,'dmY')
 					spModel.set("date",current);
-					
 					spModel.set("mode","Sale");
 					
 					//console.log(current);
 					Ext.Ajax.request({
-						url : '/accounts/addItem',
+						url : '/AccountingWebApp/accounts/addSalePurchase',
 						method : 'POST',
 						jsonData : {
 							"itemId" : spModel.get("itemId") ,
@@ -96,7 +102,7 @@ Ext.define('Accounts.view.main.SalePurchaseList', {
 							var resp = Ext.decode(response.responseText);
 						
 							if(resp != null){
-								var acc = new Accounts.model.Item(resp);
+								var acc = new Accounts.model.SalePurchase(resp);
 								
 								spModel.set("spId",acc.get("spId"));
 								spModel.set("itemId",acc.get("itemId"));
@@ -127,8 +133,10 @@ Ext.define('Accounts.view.main.SalePurchaseList', {
 					//alert("Updated");
 					
 					var spEntries = this.getSelectionModel().getSelection();
-					var spStore = Ext.data.StoreManager.lookup('Accounts.store.ItemStore');
-					var messageRow = this.getDockedItems()[1].getComponent('txt');
+					var spStore = Ext.data.StoreManager.lookup('Accounts.store.SalePurchaseStore');
+					var messageRow = Ext.getCmp('sptxt');
+					
+					//console.log(spEntries);
 					
 					var data = [];
 					for(var i = 0 ; i < spEntries.length ; i++){	
@@ -136,11 +144,13 @@ Ext.define('Accounts.view.main.SalePurchaseList', {
 							spId : spEntries[i].get("spId"),
 							itemId : spEntries[i].get("itemId"),
 							quantity : spEntries[i].get("quantity"),
-							date : spEntries[i].get("date"),
+							date : Ext.Date.format(spEntries[i].get("date"),'dmY'),
 							mode : spEntries[i].get("mode")
 						});
 						
 					}
+					
+					console.log(data);
 					
 					if (data.length > 0){
 						Ext.Msg.show({
@@ -154,17 +164,20 @@ Ext.define('Accounts.view.main.SalePurchaseList', {
 								if(buttonValue === 'yes'){
 									
 									Ext.Ajax.request({
-										url : '/accounts/multiUpdateItems',
+										url : '/AccountingWebApp/accounts/multiUpdateSalesPurchases',
 										method : 'PUT',
 										jsonData : data,
 										success : function(response,request){
+											
+											//console.log(request);
+											console.log(response);
 											
 											var resp = Ext.decode(response.responseText);
 											
 											var spEntries = [];
 											
 											for(var i = 0 ; i < resp.length ; i++){
-												var customer = Ext.create('Accounts.model.Item',resp[i]);
+												var customer = Ext.create('Accounts.model.SalePurchase',resp[i]);
 												
 												spEntries[i] = customer;
 											}
@@ -213,9 +226,9 @@ Ext.define('Accounts.view.main.SalePurchaseList', {
 				scope : this,
 				handler : function(){
 					//alert("Delete");
-					var spStore = Ext.data.StoreManager.lookup('Accounts.store.ItemStore');
+					var spStore = Ext.data.StoreManager.lookup('Accounts.store.SalePurchaseStore');
 					var spEntries = this.getSelectionModel().getSelection();
-					var messageRow = this.getDockedItems()[1].getComponent('txt');
+					var messageRow = Ext.getCmp('sptxt');
 					
 					var data = [];
 					for(var i = 0 ; i < spEntries.length ; i++){
@@ -241,7 +254,7 @@ Ext.define('Accounts.view.main.SalePurchaseList', {
 								if(buttonValue === 'yes'){
 									
 									Ext.Ajax.request({
-										url : '/accounts/multiDeleteItems',
+										url : '/AccountingWebApp/accounts/multiDeleteSalesPurchases',
 										method : 'PUT',
 										jsonData : data,
 										success : function(response,request){
@@ -284,7 +297,7 @@ Ext.define('Accounts.view.main.SalePurchaseList', {
 			{
 				xtype : 'pagingtoolbar',
 				displayInfo: true,
-				store : 'Accounts.store.ItemStore'
+				store : 'Accounts.store.SalePurchaseStore'
 			}
 			]
 		});

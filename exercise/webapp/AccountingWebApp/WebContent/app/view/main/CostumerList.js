@@ -9,7 +9,6 @@ Ext.define('Accounts.view.main.CustomerList', {
 	
 	initComponent : function(){
 		this.editing = Ext.create('Ext.grid.plugin.RowEditing');
-		console.log("customer");
 		
 		Ext.apply(this,{
 			plugins : [this.editing],
@@ -35,7 +34,7 @@ Ext.define('Accounts.view.main.CustomerList', {
 			
 			tbar : [{
 				xtype : 'tbtext',
-				itemId : 'txt',
+				id : 'custtxt',
 				text : 'New'
 			}],
 			
@@ -53,7 +52,7 @@ Ext.define('Accounts.view.main.CustomerList', {
 					
 					//console.log(current);
 					Ext.Ajax.request({
-						url : '/accounts/addCustomer',
+						url : '/AccountingWebApp/accounts/addCustomer',
 						method : 'POST',
 						jsonData : {
 							"name" : custModel.get("name") ,
@@ -67,7 +66,7 @@ Ext.define('Accounts.view.main.CustomerList', {
 							// process server response here
 						
 							var resp = Ext.decode(response.responseText);
-						
+							
 							if(resp != null){
 								var acc = new Accounts.model.Customer(resp);
 								
@@ -96,11 +95,12 @@ Ext.define('Accounts.view.main.CustomerList', {
 				text : 'Update',
 				scope : this,
 				handler : function(){
-					//alert("Updated");
 					
 					var customers = this.getSelectionModel().getSelection();
 					var custStore = Ext.data.StoreManager.lookup('Accounts.store.CustomerStore');
-					var messageRow = this.getDockedItems()[1].getComponent('txt');
+					var messageRow = Ext.getCmp('custtxt');
+					
+					//console.log(Ext.getCmp('txt'));
 					
 					var data = [];
 					for(var i = 0 ; i < customers.length ; i++){	
@@ -125,7 +125,7 @@ Ext.define('Accounts.view.main.CustomerList', {
 								if(buttonValue === 'yes'){
 									
 									Ext.Ajax.request({
-										url : '/accounts/multiUpdateCustomers',
+										url : '/AccountingWebApp/accounts/multiUpdateCustomers',
 										method : 'PUT',
 										jsonData : data,
 										success : function(response,request){
@@ -151,7 +151,7 @@ Ext.define('Accounts.view.main.CustomerList', {
 												
 												messageRow.setText('Updated Successfully');
 												Ext.defer(function(){
-													messageRow.getEl().setStyle({
+													messageRow.setStyle({
 														color : 'black'
 													});
 													messageRow.setText('Ready');
@@ -186,13 +186,13 @@ Ext.define('Accounts.view.main.CustomerList', {
 					//alert("Delete");
 					var custStore = Ext.data.StoreManager.lookup('Accounts.store.CustomerStore');
 					var customers = this.getSelectionModel().getSelection();
-					var messageRow = this.getDockedItems()[1].getComponent('txt');
+					var messageRow = Ext.getCmp('custtxt');
 					
 					var data = [];
 					for(var i = 0 ; i < customers.length ; i++){
 						
 						data[i] = new Object({
-							custId : customers[i].get("icustId"),
+							custId : customers[i].get("custId"),
 							name : customers[i].get("name"),
 							address : customers[i].get("address"),
 							contact : customers[i].get("contact")
@@ -211,7 +211,7 @@ Ext.define('Accounts.view.main.CustomerList', {
 								if(buttonValue === 'yes'){
 									
 									Ext.Ajax.request({
-										url : '/accounts/multiDeleteCustomers',
+										url : '/AccountingWebApp/accounts/multiDeleteCustomers',
 										method : 'PUT',
 										jsonData : data,
 										success : function(response,request){

@@ -9,8 +9,6 @@ Ext.define('Accounts.view.main.ItemList', {
 	
 	initComponent : function(){
 		
-		console.log("Item");
-		
 		this.editing = Ext.create('Ext.grid.plugin.RowEditing');
 		
 		Ext.apply(this,{
@@ -37,7 +35,7 @@ Ext.define('Accounts.view.main.ItemList', {
 			
 			tbar : [{
 				xtype : 'tbtext',
-				itemId : 'txt',
+				id : 'itemtxt',
 				text : 'New'
 			}],
 			
@@ -62,7 +60,7 @@ Ext.define('Accounts.view.main.ItemList', {
 					
 					//console.log(current);
 					Ext.Ajax.request({
-						url : '/accounts/addItem',
+						url : '/AccountingWebApp/accounts/addItem',
 						method : 'POST',
 						jsonData : {
 							"name" : itemModel.get("name") ,
@@ -109,7 +107,7 @@ Ext.define('Accounts.view.main.ItemList', {
 					
 					var items = this.getSelectionModel().getSelection();
 					var itemStore = Ext.data.StoreManager.lookup('Accounts.store.ItemStore');
-					var messageRow = this.getDockedItems()[1].getComponent('txt');
+					var messageRow = Ext.getCmp('itemtxt');
 					
 					var data = [];
 					for(var i = 0 ; i < items.length ; i++){	
@@ -134,7 +132,7 @@ Ext.define('Accounts.view.main.ItemList', {
 								if(buttonValue === 'yes'){
 									
 									Ext.Ajax.request({
-										url : '/accounts/multiUpdateItems',
+										url : '/AccountingWebApp/accounts/multiUpdateItems',
 										method : 'PUT',
 										jsonData : data,
 										success : function(response,request){
@@ -195,7 +193,7 @@ Ext.define('Accounts.view.main.ItemList', {
 					//alert("Delete");
 					var itemStore = Ext.data.StoreManager.lookup('Accounts.store.ItemStore');
 					var items = this.getSelectionModel().getSelection();
-					var messageRow = this.getDockedItems()[1].getComponent('txt');
+					var messageRow = Ext.getCmp('itemtxt');
 					
 					var data = [];
 					for(var i = 0 ; i < items.length ; i++){
@@ -220,7 +218,7 @@ Ext.define('Accounts.view.main.ItemList', {
 								if(buttonValue === 'yes'){
 									
 									Ext.Ajax.request({
-										url : '/accounts/multiDeleteItems',
+										url : '/AccountingWebApp/accounts/multiDeleteItems',
 										method : 'PUT',
 										jsonData : data,
 										success : function(response,request){

@@ -9,8 +9,6 @@ Ext.define('Accounts.view.main.PaymentList', {
 	
 	initComponent : function(){
 		
-		console.log("Payment");
-		
 		this.editing = Ext.create('Ext.grid.plugin.RowEditing');
 		
 		Ext.apply(this,{
@@ -32,13 +30,27 @@ Ext.define('Accounts.view.main.PaymentList', {
 				{ text: 'Id',  dataIndex: 'trId', width : 40 },
 				{ text: 'SalePurchaseId',  dataIndex: 'trId',flex: 1, editor : {allowBlank : true} },
 				{ text: 'CustomerId',  dataIndex: 'trId', flex: 1, editor : {allowBlank : true} },
-				{ text: 'Creedit/Debit', dataIndex: 'mode', flex: 1, editor : {allowBlank : true} },
-				{ text: 'Amount', dataIndex: 'amount', flex: 1, editor : {allowBlank : true} }
+				{ 
+					text: 'Credit/Debit', 
+					dataIndex: 'mode', 
+					flex : 1,
+					editor : 
+					{
+						xtype : 'combo',
+						allowBlank: false,
+						typeAhead : true,
+						renderTo: Ext.getBody(),
+						store : [
+							['Debit', 'Debit'],
+							['Credit', 'Credit']
+						]
+					}
+				},{ text: 'Amount', dataIndex: 'amount', flex: 1, editor : {allowBlank : true} }
 			],
 			
 			tbar : [{
 				xtype : 'tbtext',
-				itemId : 'txt',
+				id : 'paymenttxt',
 				text : 'New'
 			}],
 			
@@ -52,19 +64,14 @@ Ext.define('Accounts.view.main.PaymentList', {
 					var paymentStore = Ext.data.StoreManager.lookup('Accounts.store.PaymentStore');
 					
 					var paymentModel = Ext.create("Accounts.model.Payment");
-					var id = paymentStore.max("trId");
-					
-					id++;
 					
 					paymentModel.set("spId",0);
-					paymentModel.set("trId",id);
 					paymentModel.set("custId",0);
 					paymentModel.set("amount",0);
-					paymentModel.set("mode","DEBIT");
+					paymentModel.set("mode","Debit");
 					
-					//console.log(current);
 					Ext.Ajax.request({
-						url : '/accounts/addPayment',
+						url : '/AccountingWebApp/accounts/addPayment',
 						method : 'POST',
 						jsonData : {
 							"spId" : paymentModel.get("spId"),
@@ -77,12 +84,14 @@ Ext.define('Accounts.view.main.PaymentList', {
 						},
 						success : function(response,request){
 							// process server response here
-						
+							
+							console.log(response);
+							console.log(request);
 							var resp = Ext.decode(response.responseText);
 						
 							if(resp != null){
-								var acc = new Accounts.model.Item(resp);
-								
+								var acc = new Accounts.model.Payment(resp);
+								//console.log(acc);
 								paymentModel.set("trId",acc.get("trId"));
 								paymentModel.set("spId",acc.get("spId"));
 								paymentModel.set("custId",acc.get("custId"));
@@ -113,7 +122,7 @@ Ext.define('Accounts.view.main.PaymentList', {
 					
 					var payments = this.getSelectionModel().getSelection();
 					var paymentStore = Ext.data.StoreManager.lookup('Accounts.store.PaymentStore');
-					var messageRow = this.getDockedItems()[1].getComponent('txt');
+					var messageRow = Ext.getCmp('paymenttxt');
 					
 					var data = [];
 					for(var i = 0 ; i < payments.length ; i++){	
@@ -139,7 +148,7 @@ Ext.define('Accounts.view.main.PaymentList', {
 								if(buttonValue === 'yes'){
 									
 									Ext.Ajax.request({
-										url : '/accounts/multiUpdatePayments',
+										url : '/AccountingWebApp/accounts/multiUpdatePayments',
 										method : 'PUT',
 										jsonData : data,
 										success : function(response,request){
@@ -149,9 +158,9 @@ Ext.define('Accounts.view.main.PaymentList', {
 											var payments = [];
 											
 											for(var i = 0 ; i < resp.length ; i++){
-												var customer = Ext.create('Accounts.model.Item',resp[i]);
+												var payment = Ext.create('Accounts.model.Payment',resp[i]);
 												
-												payments[i] = customer;
+												payments[i] = payment;
 											}
 											
 											paymentStore.load(payments);
@@ -200,7 +209,7 @@ Ext.define('Accounts.view.main.PaymentList', {
 					//alert("Delete");
 					var paymentStore = Ext.data.StoreManager.lookup('Accounts.store.PaymentStore');
 					var payments = this.getSelectionModel().getSelection();
-					var messageRow = this.getDockedItems()[1].getComponent('txt');
+					var messageRow = Ext.getCmp('paymenttxt');
 					
 					var data = [];
 					for(var i = 0 ; i < payments.length ; i++){
@@ -226,7 +235,7 @@ Ext.define('Accounts.view.main.PaymentList', {
 								if(buttonValue === 'yes'){
 									
 									Ext.Ajax.request({
-										url : '/accounts/multiDeletePayments',
+										url : '/AccountingWebApp/accounts/multiDeletePayments',
 										method : 'PUT',
 										jsonData : data,
 										success : function(response,request){

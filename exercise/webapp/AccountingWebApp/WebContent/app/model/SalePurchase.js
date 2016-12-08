@@ -11,7 +11,7 @@ Ext.define('Accounts.model.SalePurchase', {
 	
 	proxy: {
         type: 'ajax',
-        url: '/accounts/viewAllSalesPurchases',
+        url: '/AccountingWebApp/accounts/viewAllSalesPurchases',
         reader: {
 			rootProperty: 'data',
 			totalProperty : 'total'

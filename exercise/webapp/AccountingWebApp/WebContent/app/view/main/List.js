@@ -85,7 +85,7 @@ Ext.define('MyClassic.view.main.List', {
 					//console.log(accModel);					
 
 					Ext.Ajax.request({
-						url : '/accounts/add',
+						url : '/AccountingWebApp/accounts/add',
 						method : 'POST',
 						jsonData : {
 							"name" : accModel.get("name") ,
@@ -170,7 +170,7 @@ Ext.define('MyClassic.view.main.List', {
 								if(buttonValue === 'yes'){
 									
 									Ext.Ajax.request({
-										url : '/accounts/multiUpdate',
+										url : '/AccountingWebApp/accounts/multiUpdate',
 										method : 'PUT',
 										jsonData : data,
 										success : function(response,request){
@@ -261,7 +261,7 @@ Ext.define('MyClassic.view.main.List', {
 								if(buttonValue === 'yes'){
 									
 									Ext.Ajax.request({
-										url : '/accounts/multiDelete',
+										url : '/AccountingWebApp/accounts/multiDelete',
 										method : 'PUT',
 										jsonData : data,
 										success : function(response,request){

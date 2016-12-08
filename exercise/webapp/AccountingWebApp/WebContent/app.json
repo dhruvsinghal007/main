@@ -2,7 +2,7 @@
     /**
      * The application's namespace.
      */
-    "name": "MyClassic",
+    "name": "Accounts",
     
     /**
      * The version of the application.
@@ -86,13 +86,13 @@
     "sass": {
         /**
          * The root namespace to use when mapping *.scss files to classes in the
-         * sass/src and sass/var directories. For example, "MyClassic.view.Foo" would
-         * map to "sass/src/view/Foo.scss". If we changed this to "MyClassic.view" then
+         * sass/src and sass/var directories. For example, "Accounts.view.Foo" would
+         * map to "sass/src/view/Foo.scss". If we changed this to "Accounts.view" then
          * it would map to "sass/src/Foo.scss". To style classes outside the app's
          * root namespace, change this to "". Doing so would change the mapping of
-         * "MyClassic.view.Foo" to "sass/src/MyClassic/view/Foo.scss".
+         * "Accounts.view.Foo" to "sass/src/Accounts/view/Foo.scss".
          */
-        "namespace": "MyClassic",
+        "namespace": "Accounts",
 
         /**
          * Generated sass source settings
@@ -522,5 +522,5 @@
      * Uniquely generated id for this application, used as prefix for localStorage keys.
      * Normally you should never change this value.
      */
-    "id": "6438fa40-0d92-4166-b196-a94e80c1510d"
+    "id": "90085172-b78f-465c-b38b-7b7bd18d48e9"
 }
