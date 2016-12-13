@@ -19,17 +19,33 @@ public class Stack {
 			n.setNext(l.getStart());
 			l.setStart(n);
 		}
+		System.out.println("Pushed : " + n.getData());
 	}
 	
-	public void pop(){
+	public Node pop(){
+		Node n;
 		if(l.getStart()==null){
 			System.out.println("List is empty!!!");
+			n = null;
 		}
 		else{
-			Node n=l.getStart();
+			n=l.getStart();
 			l.setStart(n.getNext());
 			System.out.println("Element popped: "+n.getData());
-			n=null;
+			n.setNext(null);
 		}
+		return n;
+	}
+	
+	public Node peek(){
+		return l.getStart();
+	}
+	
+	public boolean isEmpty(){
+		return (l.getStart() == null);
+	}
+	
+	public void display(){
+		l.display();
 	}
 }
