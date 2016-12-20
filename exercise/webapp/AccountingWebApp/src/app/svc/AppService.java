@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 import app.bo.AppBO;
 import app.dto.Customer;
 import app.dto.Item;
+import app.dto.Loan;
 import app.dto.Payment;
 import app.dto.SalePurchase;
 
@@ -84,6 +85,14 @@ public class AppService {
 	public Payment viewPayment(@QueryParam("id") int trId){
 		Payment payment = appBO.viewPayment(trId); 
 		return payment;
+	}
+	
+	@GET
+	@Path("/viewLoan")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Loan viewLoan(@QueryParam("id") int loanId){
+		Loan loan = appBO.viewLoan(loanId); 
+		return loan;
 	}
 	
 	/*@GET
@@ -182,13 +191,36 @@ public class AppService {
 		for(Payment payment : payments){
 			array.add(Json.createObjectBuilder().add("trId", payment.getTrId())
 												.add("SPId", payment.getSPId())
-												.add("custId", payment.getCustId())
 												.add("mode", payment.getMode().toString())
 												.add("amount", payment.getAmount()));
 		}
 		
 		JsonObject json = Json.createObjectBuilder().add("data", array)
 													.add("total", appBO.getTotalPayments())
+													.build();
+		
+		return json.toString();
+	}
+	
+	@GET
+	@Path("/viewAllLoans")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String viewAllLoansPaginated(@QueryParam("start") int start,
+											@QueryParam("limit") int limit){
+		List<Loan> loans = appBO.viewAllLoansPaginated(start, limit);
+		
+		JsonArrayBuilder array = Json.createArrayBuilder();
+		
+		for(Loan loan : loans){
+			array.add(Json.createObjectBuilder().add("loanId", loan.getLoanId())
+												.add("custId", loan.getCustId())
+												.add("mode", loan.getMode().toString())
+												.add("amount", loan.getAmount())
+												.add("date", loan.getDate()));
+		}
+		
+		JsonObject json = Json.createObjectBuilder().add("data", array)
+													.add("total", appBO.getTotalLoans())
 													.build();
 		
 		return json.toString();
@@ -249,9 +281,23 @@ public class AppService {
 		Payment payment =  appBO.addPayment(paymentParam);
 		JsonObject json = Json.createObjectBuilder().add("trId", payment.getTrId())
 													.add("SPId", payment.getSPId())
-													.add("custId", payment.getCustId())
 													.add("mode", payment.getMode())
 													.add("amount", payment.getAmount())
+													.build();
+		return json.toString();
+	}
+	
+	@POST
+	@Path("/addLoan")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String addLoan(Loan loanParam){
+		Loan loan =  appBO.addLoan(loanParam);
+		JsonObject json = Json.createObjectBuilder().add("loanId", loan.getLoanId())
+													.add("custId", loan.getCustId())
+													.add("mode", loan.getMode())
+													.add("amount", loan.getAmount())
+													.add("date", loan.getDate())
 													.build();
 		return json.toString();
 	}
@@ -291,6 +337,14 @@ public class AppService {
 		return appBO.multiUpdatePayments(payments); 
 	}
 	
+	@PUT
+	@Path("/multiUpdateLoans")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Loan> multiUpdateLoans(List<Loan> loans){
+		return appBO.multiUpdateLoans(loans); 
+	}
+	
 	/*
 	 * below methods for deleting multiple db items. 
 	 */
@@ -320,6 +374,13 @@ public class AppService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void multiDeletePayments(List<Payment> payments){
 		appBO.multiDeletePayments(payments); 
+	}
+	
+	@PUT
+	@Path("/multiDeleteLoans")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void multiDeleteLoans(List<Loan> loans){
+		appBO.multiDeleteLoans(loans); 
 	}
 
 }

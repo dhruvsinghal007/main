@@ -1,7 +1,7 @@
 package app.dto;
 
 public class Payment {
-	private int trId,SPId,custId;
+	private int trId,spId;
 	private String mode;
 	private int amount;
 	
@@ -14,19 +14,11 @@ public class Payment {
 	}
 
 	public int getSPId() {
-		return SPId;
+		return spId;
 	}
 
 	public void setSPId(int spId) {
-		this.SPId = spId;
-	}
-
-	public int getCustId() {
-		return custId;
-	}
-
-	public void setCustId(int custId) {
-		this.custId = custId;
+		this.spId = spId;
 	}
 
 	public String getMode() {
@@ -56,7 +48,7 @@ public class Payment {
 
 	@Override
 	public String toString() {
-		return "Payment [transactionId=" + trId + ", SPId=" + SPId + ", customerId="
-				+ custId + ", mode=" + mode + ", amount=" + amount + "]";
+		return "Payment [transactionId=" + trId + ", SPId=" + spId + 
+				", mode=" + mode + ", amount=" + amount + "]";
 	}
 }

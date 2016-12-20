@@ -1,22 +1,26 @@
 $app-name:  dynamic( 'Accounts' );
-$image-search-path: 'F:/java ide and extjs/extjs boot camp/labs/new/build/development/Accounts/resources';
+$image-search-path: 'F:/java ide and extjs/extjs boot camp/labs/app/build/development/Accounts/resources';
 $theme-name:  dynamic( 'theme-triton' );
 $include-accounts-application: dynamic(true);;
 $include-accounts-model-customer: dynamic(true);;
 $include-accounts-model-item: dynamic(true);;
+$include-accounts-model-loan: dynamic(true);;
 $include-accounts-model-payment: dynamic(true);;
 $include-accounts-model-salepurchase: dynamic(true);;
 $include-accounts-store-customerstore: dynamic(true);;
 $include-accounts-store-itemstore: dynamic(true);;
+$include-accounts-store-loanstore: dynamic(true);;
 $include-accounts-store-paymentstore: dynamic(true);;
 $include-accounts-store-salepurchasestore: dynamic(true);;
-$include-accounts-view-main-customerlist: dynamic(true);;
-$include-accounts-view-main-itemlist: dynamic(true);;
 $include-accounts-view-main-main: dynamic(true);;
 $include-accounts-view-main-maincontroller: dynamic(true);;
+$include-accounts-view-main-maindb: dynamic(true);;
 $include-accounts-view-main-mainmodel: dynamic(true);;
-$include-accounts-view-main-paymentlist: dynamic(true);;
-$include-accounts-view-main-salepurchaselist: dynamic(true);;
+$include-accounts-view-main-mainview: dynamic(true);;
+$include-accounts-view-main-db-customerlist: dynamic(true);;
+$include-accounts-view-main-db-itemlist: dynamic(true);;
+$include-accounts-view-main-db-paymentlist: dynamic(true);;
+$include-accounts-view-main-db-salepurchaselist: dynamic(true);;
 $include-ext-abstractcomponent: dynamic(true);;
 $include-ext-abstractcontainer: dynamic(true);;
 $include-ext-abstractmanager: dynamic(true);;
@@ -952,6 +956,14 @@ $current-resource-root: $theme-triton-resource-root;
 $relative-image-path-for-uis: $theme-triton-resource-path;
 @import '../../../../../ext/classic/theme-triton/sass/etc/all';
 
+/* including package Accounts */
+$Accounts-resource-root: '' !default;
+$Accounts-resource-path: 'images' !default;
+$current-package: false;
+$current-resource-root: $Accounts-resource-root;
+$relative-image-path-for-uis: $Accounts-resource-path;
+@import '../../../../../sass/etc/all';
+
 
 /* ======================== VAR ======================== */
 
@@ -1127,6 +1139,14 @@ $relative-image-path-for-uis: $theme-triton-resource-path;
 @import '../../../../../ext/classic/theme-triton/sass/var/tab/Tab';
 @import '../../../../../ext/classic/theme-triton/sass/var/tab/Bar';
 @import '../../../../../ext/classic/theme-triton/sass/var/tree/View';
+
+/* including package Accounts */
+$Accounts-resource-root: '' !default;
+$Accounts-resource-path: 'images' !default;
+$current-package: false;
+$current-resource-root: $Accounts-resource-root;
+$relative-image-path-for-uis: $Accounts-resource-path;
+@import '../../../../../sass/var/all';
 
 
 /* ======================== RULE ======================== */
@@ -1335,3 +1355,11 @@ $relative-image-path-for-uis: $theme-triton-resource-path;
 @import '../../../../../ext/classic/theme-triton/sass/src/tab/Tab';
 @import '../../../../../ext/classic/theme-triton/sass/src/tree/View';
 @import '../../../../../ext/classic/theme-triton/sass/src/window/Toast';
+
+/* including package Accounts */
+$Accounts-resource-root: '' !default;
+$Accounts-resource-path: 'images' !default;
+$current-package: false;
+$current-resource-root: $Accounts-resource-root;
+$relative-image-path-for-uis: $Accounts-resource-path;
+@import '../../../../../sass/src/view/main/Main';

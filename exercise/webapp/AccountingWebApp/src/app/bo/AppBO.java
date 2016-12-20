@@ -8,10 +8,12 @@ import org.springframework.beans.factory.InitializingBean;
 
 import app.db.CustomerDB;
 import app.db.ItemDB;
+import app.db.LoanDB;
 import app.db.PaymentDB;
 import app.db.SalePurchaseDB;
 import app.dto.Customer;
 import app.dto.Item;
+import app.dto.Loan;
 import app.dto.Payment;
 import app.dto.SalePurchase;
 
@@ -21,6 +23,7 @@ public class AppBO implements InitializingBean{
 	private Map<Integer, Customer> customers = CustomerDB.getCustomers() ;
 	private Map<Integer, SalePurchase> salePurchaseEntries = SalePurchaseDB.getSPItems();
 	private Map<Integer, Payment> payments = PaymentDB.getPayments(); 
+	private Map<Integer, Loan> loans = LoanDB.getLoans(); 
 	
 	/*
 	 * below methods for getting total number of items 
@@ -45,6 +48,11 @@ public class AppBO implements InitializingBean{
 		return list.size();
 	}
 	
+	public int getTotalLoans() {
+		List<Loan> list = new ArrayList<>(loans.values());
+		return list.size();
+	}
+	
 	/*
 	 * below methods for viewing a particular element from db
 	 */
@@ -62,6 +70,10 @@ public class AppBO implements InitializingBean{
 	
 	public SalePurchase viewSPEntry(int id) {
 		return salePurchaseEntries.get(id);
+	}
+	
+	public Loan viewLoan(int id) {
+		return loans.get(id);
 	}
 	
 	/*
@@ -84,6 +96,11 @@ public class AppBO implements InitializingBean{
 	
 	public List<Payment> viewAllPayments(){
 		List<Payment> list = new ArrayList<>(payments.values());
+		return list;
+	}
+	
+	public List<Loan> viewAllLoans(){
+		List<Loan> list = new ArrayList<>(loans.values());
 		return list;
 	}
 	
@@ -121,6 +138,15 @@ public class AppBO implements InitializingBean{
 	public List<Payment> viewAllPaymentsPaginated(int start, int limit) {
 		//System.out.println(start + " " + limit);
 		List<Payment> list = new ArrayList<>(payments.values());
+		if(start + limit  >= list.size()){
+			return list.subList(start, list.size());
+		}
+		return list.subList(start, start + limit);
+	}
+	
+	public List<Loan> viewAllLoansPaginated(int start, int limit) {
+		//System.out.println(start + " " + limit);
+		List<Loan> list = new ArrayList<>(loans.values());
 		if(start + limit  >= list.size()){
 			return list.subList(start, list.size());
 		}
@@ -182,6 +208,19 @@ public class AppBO implements InitializingBean{
 		payments.put(payment.getTrId(), payment);
 		return payment;
 	}
+	
+	public Loan addLoan(Loan loan) {
+		 List<Loan> list = new ArrayList<>(loans.values());
+		 int large = 0;
+		 for(int i = 0;i < list.size();i++){
+			 if(list.get(i).getLoanId() > large){
+				 large = list.get(i).getLoanId();
+			 }
+		 }
+		loan.setLoanId(large+1);
+		loans.put(loan.getLoanId(), loan);
+		return loan;
+	}
 
 	/*
 	 * below methods for deleting multiple db items
@@ -207,6 +246,12 @@ public class AppBO implements InitializingBean{
 	public void multiDeletePayments(List<Payment> paymentsParam) {
 		for(Payment st : paymentsParam){
 			payments.remove(st.getTrId());
+		}
+	}
+	
+	public void multiDeleteLoans(List<Loan> loansParam) {
+		for(Loan st : loansParam){
+			loans.remove(st.getLoanId());
 		}
 	}
 	
@@ -250,6 +295,15 @@ public class AppBO implements InitializingBean{
 		}
 		return new ArrayList<>(payments.values());
 	}
+	
+	public List<Loan> multiUpdateLoans(List<Loan> loansParam) {
+		for(Loan st : loansParam){
+			if(st.getLoanId() > 0){
+				loans.put(st.getLoanId(),st);
+			}
+		}
+		return new ArrayList<>(loans.values());
+	}
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
@@ -279,10 +333,17 @@ public class AppBO implements InitializingBean{
 			Payment payment = new Payment();
 			payment.setTrId(i);
 			payment.setSPId(0);
-			payment.setCustId(0);
 			payment.setMode("Debit");
 			payment.setAmount(i*100);
 			payments.put(payment.getTrId(), payment);
+			
+			Loan loan = new Loan();
+			loan.setLoanId(i);
+			loan.setCustId(0);
+			loan.setMode("Debit");
+			loan.setDate("17122016");
+			loan.setAmount(i*100);
+			loans.put(loan.getLoanId(), loan);
 		}
 	}
 
