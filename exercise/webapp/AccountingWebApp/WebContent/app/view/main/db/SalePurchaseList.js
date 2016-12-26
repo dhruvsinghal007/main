@@ -85,7 +85,7 @@ Ext.define('Accounts.view.main.db.SalePurchaseList', {
 					
 					//console.log(current);
 					Ext.Ajax.request({
-						url : '/AccountingWebApp/accounts/addSalePurchase',
+						url : '/accounts/addSalePurchase',
 						method : 'POST',
 						jsonData : {
 							"itemId" : spModel.get("itemId") ,
@@ -161,7 +161,7 @@ Ext.define('Accounts.view.main.db.SalePurchaseList', {
 								if(buttonValue === 'yes'){
 									
 									Ext.Ajax.request({
-										url : '/AccountingWebApp/accounts/multiUpdateSalesPurchases',
+										url : '/accounts/multiUpdateSalesPurchases',
 										method : 'PUT',
 										jsonData : data,
 										success : function(response,request){
@@ -247,7 +247,7 @@ Ext.define('Accounts.view.main.db.SalePurchaseList', {
 								if(buttonValue === 'yes'){
 									
 									Ext.Ajax.request({
-										url : '/AccountingWebApp/accounts/multiDeleteSalesPurchases',
+										url : '/accounts/multiDeleteSalesPurchases',
 										method : 'PUT',
 										jsonData : data,
 										success : function(response,request){

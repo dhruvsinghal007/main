@@ -1,8 +1,8 @@
 Ext.define('Accounts.model.SalePurchase', {
     extend : 'Ext.data.Model',
-	idProperty : 'spId',
+	idProperty : 'SPId',
 	fields : [
-		{ name : 'spId', type : 'int' },
+		{ name : 'SPId', type : 'int' },
 		{ name : 'itemId', type : 'int', allowNull : true },
 		{ name : 'quantity', type : 'int', allowNull : true },
 		{ name : 'mode', type : 'string', allowNull : true },

@@ -1,7 +1,6 @@
 package app.svc;
 
 import java.util.List;
-
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
@@ -18,9 +17,7 @@ import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Component;
 
 import app.bo.AppBO;
-import app.dto.Customer;
-import app.dto.Item;
-import app.dto.Loan;
+import app.dto.Account;
 import app.dto.Payment;
 import app.dto.SalePurchase;
 
@@ -53,25 +50,6 @@ public class AppService {
 	 * below methods for viewing particular entry in db
 	 */
 	@GET
-	@Path("/viewCustomer")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Customer viewCustomer(@QueryParam("id") int custId){
-
-		// http://localhost:8080/HelloSpring/student/view?id=1
-		
-		Customer customer = appBO.viewCustomer(custId); 
-		return customer;
-	}
-	
-	@GET
-	@Path("/viewItem")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Item viewItem(@QueryParam("id") int itemId){
-		Item item = appBO.viewItem(itemId); 
-		return item;
-	}
-	
-	@GET
 	@Path("/viewSalePurchase")
 	@Produces(MediaType.APPLICATION_JSON)
 	public SalePurchase viewSPEntry(@QueryParam("id") int spId){
@@ -88,11 +66,11 @@ public class AppService {
 	}
 	
 	@GET
-	@Path("/viewLoan")
+	@Path("/viewAccount")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Loan viewLoan(@QueryParam("id") int loanId){
-		Loan loan = appBO.viewLoan(loanId); 
-		return loan;
+	public Account viewAccount(@QueryParam("id") int id){
+		Account account = appBO.viewAccount(id); 
+		return account;
 	}
 	
 	/*@GET
@@ -109,52 +87,6 @@ public class AppService {
 	 * below methods for viewing all db entries in paginated fashion. Takes start and limit
 	 * as parameters
 	 */
-	@GET
-	@Path("/viewAllCustomers")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String viewAllCustomersPaginated(@QueryParam("start") int start,
-											@QueryParam("limit") int limit){
-		List<Customer> customers = appBO.viewAllCustomersPaginated(start,limit);
-		
-		JsonArrayBuilder array = Json.createArrayBuilder();
-		
-		for(Customer customer : customers){
-			array.add(Json.createObjectBuilder().add("custId", customer.getCustId())
-													.add("name", customer.getName())
-													.add("address", customer.getAddress())
-													.add("contact", customer.getContact()));
-		}
-		
-		JsonObject json = Json.createObjectBuilder().add("data", array)
-													.add("total", appBO.getTotalCustomers())
-													.build();
-		
-		return json.toString();
-	}
-	
-	@GET
-	@Path("/viewAllItems")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String viewAllItemsPaginated(@QueryParam("start") int start,
-											@QueryParam("limit") int limit){
-		List<Item> items = appBO.viewAllItemsPaginated(start,limit);
-		
-		JsonArrayBuilder array = Json.createArrayBuilder();
-		
-		for(Item item : items){
-			array.add(Json.createObjectBuilder().add("itemId", item.getItemId())
-												.add("name", item.getName())
-												.add("netQuantity", item.getNetQuantity())
-												.add("cost", item.getCost()));
-		}
-		
-		JsonObject json = Json.createObjectBuilder().add("data", array)
-													.add("total", appBO.getTotalItems())
-													.build();
-		
-		return json.toString();
-	}
-	
 	@GET
 	@Path("/viewAllSalesPurchases")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -203,59 +135,17 @@ public class AppService {
 	}
 	
 	@GET
-	@Path("/viewAllLoans")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String viewAllLoansPaginated(@QueryParam("start") int start,
-											@QueryParam("limit") int limit){
-		List<Loan> loans = appBO.viewAllLoansPaginated(start, limit);
+	@Path("/viewAllAccounts")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Account> viewAllAccounts(){
+		List<Account> accounts = appBO.viewAllAccounts();
 		
-		JsonArrayBuilder array = Json.createArrayBuilder();
-		
-		for(Loan loan : loans){
-			array.add(Json.createObjectBuilder().add("loanId", loan.getLoanId())
-												.add("custId", loan.getCustId())
-												.add("mode", loan.getMode().toString())
-												.add("amount", loan.getAmount())
-												.add("date", loan.getDate()));
-		}
-		
-		JsonObject json = Json.createObjectBuilder().add("data", array)
-													.add("total", appBO.getTotalLoans())
-													.build();
-		
-		return json.toString();
+		return accounts;
 	}
 	
 	/*
-	 * below methods for adding data to db
+	 * below methods for daily records of credit and debit
 	 */
-	@POST
-	@Path("/addCustomer")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
-	public String addCustomer(Customer customer){
-		Customer cust = appBO.addCustomer(customer);
-		JsonObject json = Json.createObjectBuilder().add("custId", cust.getCustId())
-													.add("name", cust.getName())
-													.add("address", cust.getAddress())
-													.add("contact", cust.getContact())
-													.build();
-		return json.toString();
-	}
-	
-	@POST
-	@Path("/addItem")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
-	public String addItem(Item itemParam){
-		Item item = appBO.addItem(itemParam);
-		JsonObject json = Json.createObjectBuilder().add("itemId", item.getItemId())
-													.add("name", item.getName())
-													.add("netQuantity", item.getNetQuantity())
-													.add("cost", item.getCost())
-													.build();
-		return json.toString();
-	}
 	
 	@POST
 	@Path("/addSalePurchase")
@@ -287,40 +177,10 @@ public class AppService {
 		return json.toString();
 	}
 	
-	@POST
-	@Path("/addLoan")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
-	public String addLoan(Loan loanParam){
-		Loan loan =  appBO.addLoan(loanParam);
-		JsonObject json = Json.createObjectBuilder().add("loanId", loan.getLoanId())
-													.add("custId", loan.getCustId())
-													.add("mode", loan.getMode())
-													.add("amount", loan.getAmount())
-													.add("date", loan.getDate())
-													.build();
-		return json.toString();
-	}
 	
 	/*
 	 * below methods for updating multiple db items. 
 	 */
-	@PUT
-	@Path("/multiUpdateCustomers")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Customer> multiUpdateCustomers(List<Customer> customers){
-		return appBO.multiUpdateCustomers(customers); 
-	}
-	
-	@PUT
-	@Path("/multiUpdateItems")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Item> multiUpdateItems(List<Item> items){
-		return appBO.multiUpdateItems(items); 
-	}
-	
 	@PUT
 	@Path("/multiUpdateSalesPurchases")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -337,31 +197,9 @@ public class AppService {
 		return appBO.multiUpdatePayments(payments); 
 	}
 	
-	@PUT
-	@Path("/multiUpdateLoans")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Loan> multiUpdateLoans(List<Loan> loans){
-		return appBO.multiUpdateLoans(loans); 
-	}
-	
 	/*
 	 * below methods for deleting multiple db items. 
 	 */
-	@PUT
-	@Path("/multiDeleteCustomers")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void multiDeleteCustomers(List<Customer> customers){
-		appBO.multiDeleteCustomers(customers); 
-	}
-	
-	@PUT
-	@Path("/multiDeleteItems")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void multiDeleteItems(List<Item> items){
-		appBO.multiDeleteItems(items); 
-	}
-	
 	@PUT
 	@Path("/multiDeleteSalesPurchases")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -374,13 +212,6 @@ public class AppService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void multiDeletePayments(List<Payment> payments){
 		appBO.multiDeletePayments(payments); 
-	}
-	
-	@PUT
-	@Path("/multiDeleteLoans")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void multiDeleteLoans(List<Loan> loans){
-		appBO.multiDeleteLoans(loans); 
 	}
 
 }

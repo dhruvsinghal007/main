@@ -2,21 +2,21 @@ Ext.define('Accounts.Application', {
     extend: 'Ext.app.Application',
     
 	requires : [
-		'Accounts.store.CustomerStore',
-		'Accounts.store.ItemStore',
 		'Accounts.store.SalePurchaseStore',
 		'Accounts.store.PaymentStore',
-		'Accounts.store.LoanStore'
+		'Accounts.store.AccountStore',
+		'Accounts.store.daily.CreditStore',
+		'Accounts.store.daily.DebitStore'
 	],
 	
     name: 'Accounts',
 	
 	stores : [
-		'Accounts.store.CustomerStore',
-		'Accounts.store.ItemStore',
 		'Accounts.store.SalePurchaseStore',
 		'Accounts.store.PaymentStore',
-		'Accounts.store.LoanStore'
+		'Accounts.store.AccountStore',
+		'Accounts.store.daily.CreditStore',
+		'Accounts.store.daily.DebitStore'
 	],
 
     onAppUpdate: function () {

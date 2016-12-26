@@ -82,7 +82,7 @@ Ext.define('Accounts.view.main.Main', {
             xtype: 'mainView'
         }]
     },{
-        title: 'DataBases',
+        title: 'Databases',
         items: [{
             xtype: 'mainDB'
         }]

@@ -28,7 +28,7 @@ Ext.define('Accounts.view.main.db.PaymentList', {
 
 			columns: [
 				{ text: 'Id',  dataIndex: 'trId', width : 40 },
-				{ text: 'SalePurchaseId',  dataIndex: 'SPId',flex: 1, editor : {allowBlank : true} },
+				{ text: 'SalePurchaseId',  dataIndex: 'SPId',width: 120, editor : {allowBlank : true} },
 				{ 
 					text: 'Credit/Debit', 
 					dataIndex: 'mode', 

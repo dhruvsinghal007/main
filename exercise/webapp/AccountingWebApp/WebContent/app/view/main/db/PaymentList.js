@@ -69,7 +69,7 @@ Ext.define('Accounts.view.main.db.PaymentList', {
 					paymentModel.set("mode","Debit");
 					
 					Ext.Ajax.request({
-						url : '/AccountingWebApp/accounts/addPayment',
+						url : '/accounts/addPayment',
 						method : 'POST',
 						jsonData : {
 							"SPId" : paymentModel.get("SPId"),
@@ -144,7 +144,7 @@ Ext.define('Accounts.view.main.db.PaymentList', {
 								if(buttonValue === 'yes'){
 									
 									Ext.Ajax.request({
-										url : '/AccountingWebApp/accounts/multiUpdatePayments',
+										url : '/accounts/multiUpdatePayments',
 										method : 'PUT',
 										jsonData : data,
 										success : function(response,request){
@@ -230,7 +230,7 @@ Ext.define('Accounts.view.main.db.PaymentList', {
 								if(buttonValue === 'yes'){
 									
 									Ext.Ajax.request({
-										url : '/AccountingWebApp/accounts/multiDeletePayments',
+										url : '/accounts/multiDeletePayments',
 										method : 'PUT',
 										jsonData : data,
 										success : function(response,request){

@@ -10,7 +10,7 @@ Ext.define('Accounts.model.Payment', {
 	
 	proxy: {
         type: 'ajax',
-        url: '/AccountingWebApp/accounts/viewAllPayments',
+        url: '/accounts/viewAllPayments',
         reader: {
 			rootProperty: 'data',
 			totalProperty : 'total'

@@ -27,7 +27,7 @@ Ext.define('Accounts.view.main.db.SalePurchaseList', {
 
 			columns: [
 				{ text: 'Id',  dataIndex: 'SPId', width : 40 },
-				{ text: 'Item Id', dataIndex: 'itemId', flex: 1, editor : {allowBlank : false} },
+				{ text: 'Item Id', dataIndex: 'itemId', width: 70, editor : {allowBlank : false} },
 				{ 
 					text: 'Date', 
 					dataIndex: 'date', 

@@ -3,11 +3,8 @@ Ext.define('Accounts.view.main.MainDB', {
     xtype: 'mainDB',
     
 	requires: [
-		'Accounts.view.main.db.CustomerList', 
-        'Accounts.view.main.db.ItemList', 
-        'Accounts.view.main.db.SalePurchaseList', 
+		'Accounts.view.main.db.SalePurchaseList', 
         'Accounts.view.main.db.PaymentList',
-        'Accounts.view.main.db.LoanList',
         'Ext.plugin.Viewport',
         'Ext.window.MessageBox',
         'Accounts.view.main.MainController',
@@ -18,22 +15,11 @@ Ext.define('Accounts.view.main.MainDB', {
     tabBarPosition: 'bottom',
     
     items: [{
-        xtype: 'customerList',
-        title: 'Customers'
-    }, {
-        xtype: 'itemList',
-        title: 'Items'
-    }, {
         xtype: 'salePurchaseList',
         title: 'SaleAndPurchases'
     },
     {
         xtype: 'paymentList',
         title: 'Payments'
-    },
-    {
-    	xtype : 'loanList',
-    	title : 'Loans'
-    }
-	]
+    }]
 });
