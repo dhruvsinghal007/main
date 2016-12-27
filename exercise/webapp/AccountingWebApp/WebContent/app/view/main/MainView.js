@@ -35,8 +35,41 @@ Ext.define('Accounts.view.main.MainView', {
 							var current = new Date();
 							var date = Ext.getCmp('mainDate');
 							date.setValue(current);
+						},
+						'change' : function(){
+							var cGrid = Ext.getCmp('creditGrid');
+							var cStore = cGrid.getStore();
+							var dGrid = Ext.getCmp('debitGrid');
+							var dStore = dGrid.getStore();
+							
+							cStore.removeAll();
+							dStore.removeAll();
+							
+							var panel = Ext.getCmp('topEdit');
+							var amt = Ext.getCmp('mainAmt');
+							var desc = Ext.getCmp('mainDesc');
+							var mode = Ext.getCmp('mainMode');
+							var combo = Ext.getCmp('mainItem');
+							var qty = Ext.getCmp('mainQty');
+							
+							var name = panel.getComponent('mainItem');
+							
+							name.setValue('');
+							combo.setValue('');
+							mode.setValue('Credit');
+							
+							if(qty.isDisabled() == false){
+								qty.setValue(0);
+								qty.setDisabled(true);
+							}
+							amt.setValue(0);
+							desc.setValue('');
 						}
 					}
+				},{
+					xtype : 'displayfield',
+					id : 'mainName',
+					hidden : 'true'
 				},{
 					xtype : 'fieldset',
 					border : false,
@@ -82,7 +115,7 @@ Ext.define('Accounts.view.main.MainView', {
 						listeners : {
 							'select' : function(){
 								var item = Ext.getCmp('mainItem');
-								//console.log(item.getValue());
+								var name = Ext.getCmp('mainName');
 								Ext.Ajax.request({
 									url : '/accounts/viewAccount?id=' + item.getValue(),
 									success : function(response, request){
@@ -92,7 +125,7 @@ Ext.define('Accounts.view.main.MainView', {
 										//console.log(acc);
 										
 										var type = acc.get('type');
-										//console.log(type);
+										console.log(type);
 										
 										var qty = Ext.getCmp('mainQty');
 										if(type == 'Commodity'){
@@ -103,6 +136,7 @@ Ext.define('Accounts.view.main.MainView', {
 											qty.setValue(0);
 											qty.setDisabled(true);
 										}
+										name.setValue(acc.get('name'));
 									},
 									failure : function(response, request){
 										console.log(request);
@@ -154,12 +188,10 @@ Ext.define('Accounts.view.main.MainView', {
 						width : '100px'
 					},
 					handler : function(){
-						var panel = Ext.getCmp('topEdit');
 						var amt = Ext.getCmp('mainAmt');
 						var desc = Ext.getCmp('mainDesc');
 						var mode = Ext.getCmp('mainMode');
-						
-						var name = panel.getComponent('mainItem');
+						var name = Ext.getCmp('mainName');
 						
 						console.log(name.getValue());
 						console.log(amt.getValue());
@@ -210,7 +242,7 @@ Ext.define('Accounts.view.main.MainView', {
 					title : 'Credit',
 					width : 500,
 					scrollable : 'true',
-					height : 250,
+					height : 200,
 					layout : 'fit',
 					id : 'creditGrid',
 					style: {
@@ -229,7 +261,7 @@ Ext.define('Accounts.view.main.MainView', {
 					title : 'Debit',
 					width : 500,
 					scrollable : 'true',
-					height : 250,
+					height : 200,
 					id : 'debitGrid',
 					style: {
 						marginLeft: '50px'

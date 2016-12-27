@@ -214,21 +214,56 @@ public class AppBO implements InitializingBean{
 			payments.put(payment.getTrId(), payment);
 			
 		}
-		int id = 1;
-		for(int i = 1 ; i < 6 ; i++){
-			Account acc = new Account();
-			acc.setAccId(id++);
-			acc.setName("Coomodity_" + i);
-			acc.setType("Commodity");
-			accounts.put(acc.getAccId(), acc);
-		}
-		for(int i = 1 ; i < 6 ; i++){
-			Account acc = new Account();
-			acc.setAccId(id++);
-			acc.setName("Person_" + i);
-			acc.setType("Person");
-			accounts.put(acc.getAccId(), acc);
-		}
+		
+		Account acc1 = new Account();
+		acc1.setAccId(1);
+		acc1.setName("Sugar");
+		acc1.setType("Commodity");
+		accounts.put(acc1.getAccId(), acc1);
+		
+		Account acc2 = new Account();
+		acc2.setAccId(2);
+		acc2.setName("Ghee");
+		acc2.setType("Commodity");
+		accounts.put(acc2.getAccId(), acc2);
+		
+		Account acc3 = new Account();
+		acc3.setAccId(3);
+		acc3.setName("Oil");
+		acc3.setType("Commodity");
+		accounts.put(acc3.getAccId(), acc3);
+		
+		Account acc4 = new Account();
+		acc4.setAccId(4);
+		acc4.setName("Mustard Oil");
+		acc4.setType("Commodity");
+		accounts.put(acc4.getAccId(), acc4);
+		
+		Account acc5 = new Account();
+		acc5.setAccId(5);
+		acc5.setName("Manu Sweets");
+		acc5.setType("Firm");
+		accounts.put(acc5.getAccId(), acc5);
+		
+		Account acc6 = new Account();
+		acc6.setAccId(6);
+		acc6.setName("Moolchand Sweets");
+		acc6.setType("Firm");
+		accounts.put(acc6.getAccId(), acc6);
+		
+		Account acc7 = new Account();
+		acc7.setAccId(7);
+		acc7.setName("Sriram Sweets");
+		acc7.setType("Firm");
+		accounts.put(acc7.getAccId(), acc7);
+		
+		Account acc8 = new Account();
+		acc8.setAccId(8);
+		acc8.setName("Gopal Sweets");
+		acc8.setType("Firm");
+		accounts.put(acc8.getAccId(), acc8);
+		
+		
 	}
 
 }
