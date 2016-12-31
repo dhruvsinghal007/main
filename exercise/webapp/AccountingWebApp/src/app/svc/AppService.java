@@ -135,6 +135,28 @@ public class AppService {
 	}
 	
 	@GET
+	@Path("/viewAllAccountsPaginated")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String viewAllAccountssPaginated(@QueryParam("start") int start,
+											@QueryParam("limit") int limit){
+		List<Account> accounts = appBO.viewAllAccountsPaginated(start, limit);
+		
+		JsonArrayBuilder array = Json.createArrayBuilder();
+		
+		for(Account account : accounts){
+			array.add(Json.createObjectBuilder().add("accId", account.getAccId())
+												.add("name", account.getName())
+												.add("type", account.getType()));
+		}
+		
+		JsonObject json = Json.createObjectBuilder().add("data", array)
+													.add("total", appBO.getTotalAccounts())
+													.build();
+		
+		return json.toString();
+	}
+	
+	@GET
 	@Path("/viewAllAccounts")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Account> viewAllAccounts(){
@@ -177,6 +199,18 @@ public class AppService {
 		return json.toString();
 	}
 	
+	@POST
+	@Path("/addAccount")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String addAccount(Account accountParam){
+		Account account =  appBO.addAccount(accountParam);
+		JsonObject json = Json.createObjectBuilder().add("accId", account.getAccId())
+													.add("name", account.getName())
+													.add("type", account.getType())
+													.build();
+		return json.toString();
+	}
 	
 	/*
 	 * below methods for updating multiple db items. 
@@ -197,6 +231,14 @@ public class AppService {
 		return appBO.multiUpdatePayments(payments); 
 	}
 	
+	@PUT
+	@Path("/multiUpdateAccounts")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Account> multiUpdateAccounts(List<Account> accounts){
+		return appBO.multiUpdateAccounts(accounts); 
+	}
+	
 	/*
 	 * below methods for deleting multiple db items. 
 	 */
@@ -212,6 +254,13 @@ public class AppService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void multiDeletePayments(List<Payment> payments){
 		appBO.multiDeletePayments(payments); 
+	}
+	
+	@PUT
+	@Path("/multiDeleteAccounts")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void multiDeleteAccounts(List<Account> accounts){
+		appBO.multiDeleteAccounts(accounts); 
 	}
 
 }

@@ -2,8 +2,6 @@ Ext.define('Accounts.Application', {
     extend: 'Ext.app.Application',
     
 	requires : [
-		'Accounts.store.SalePurchaseStore',
-		'Accounts.store.PaymentStore',
 		'Accounts.store.AccountStore',
 		'Accounts.store.daily.CreditStore',
 		'Accounts.store.daily.DebitStore'
@@ -12,8 +10,6 @@ Ext.define('Accounts.Application', {
     name: 'Accounts',
 	
 	stores : [
-		'Accounts.store.SalePurchaseStore',
-		'Accounts.store.PaymentStore',
 		'Accounts.store.AccountStore',
 		'Accounts.store.daily.CreditStore',
 		'Accounts.store.daily.DebitStore'

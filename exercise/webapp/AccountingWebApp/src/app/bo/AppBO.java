@@ -34,6 +34,11 @@ public class AppBO implements InitializingBean{
 		return list.size();
 	}
 	
+	public int getTotalAccounts() {
+		List<Account> list = new ArrayList<>(accounts.values());
+		return list.size();
+	}
+	
 	/*
 	 * below methods for viewing a particular element from db
 	 */
@@ -84,6 +89,15 @@ public class AppBO implements InitializingBean{
 	public List<Payment> viewAllPaymentsPaginated(int start, int limit) {
 		//System.out.println(start + " " + limit);
 		List<Payment> list = new ArrayList<>(payments.values());
+		if(start + limit  >= list.size()){
+			return list.subList(start, list.size());
+		}
+		return list.subList(start, start + limit);
+	}
+	
+	public List<Account> viewAllAccountsPaginated(int start, int limit) {
+		//System.out.println(start + " " + limit);
+		List<Account> list = new ArrayList<>(accounts.values());
 		if(start + limit  >= list.size()){
 			return list.subList(start, list.size());
 		}
@@ -156,6 +170,19 @@ public class AppBO implements InitializingBean{
 		return payment;
 	}
 	
+	public Account addAccount(Account account) {
+		 List<Account> list = new ArrayList<>(accounts.values());
+		 int large = 0;
+		 for(int i = 0;i < list.size();i++){
+			 if(list.get(i).getAccId() > large){
+				 large = list.get(i).getAccId();
+			 }
+		 }
+		account.setAccId(large+1);
+		accounts.put(account.getAccId(), account);
+		return account;
+	}
+	
 	/*
 	 * below methods for deleting multiple db items
 	 */
@@ -168,6 +195,12 @@ public class AppBO implements InitializingBean{
 	public void multiDeletePayments(List<Payment> paymentsParam) {
 		for(Payment st : paymentsParam){
 			payments.remove(st.getTrId());
+		}
+	}
+	
+	public void multiDeleteAccounts(List<Account> accountsParam) {
+		for(Account st : accountsParam){
+			accounts.remove(st.getAccId());
 		}
 	}
 	
@@ -192,6 +225,15 @@ public class AppBO implements InitializingBean{
 			}
 		}
 		return new ArrayList<>(payments.values());
+	}
+	
+	public List<Account> multiUpdateAccounts(List<Account> accountsParam) {
+		for(Account st : accountsParam){
+			if(st.getAccId() > 0){
+				accounts.put(st.getAccId(),st);
+			}
+		}
+		return new ArrayList<>(accounts.values());
 	}
 	
 	@Override

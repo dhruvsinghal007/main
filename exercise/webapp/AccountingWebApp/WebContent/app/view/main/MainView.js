@@ -1,7 +1,7 @@
 Ext.define('Accounts.view.main.MainView', {
     extend: 'Ext.form.Panel',
     xtype: 'mainView',
-	requires : ['Accounts.store.AccountStore'],
+	requires : ['Accounts.store.AccComboStore'],
 	title: 'Daily Transactions',
 	
 	layout: 'anchor',
@@ -9,23 +9,21 @@ Ext.define('Accounts.view.main.MainView', {
 	
 	items : [{
 		xtype: 'fieldset',
-		width : 650,
-		height : 260,
+		width : 825,
+		height : 200,
 		layout : 'anchor',
-		style : {
-			marginLeft : '250px'
-		},
 		items: [{
 			xtype: 'datefield',
-			width : 250,
+			width : 180,
+			labelWidth : 50,
 			id : 'mainDate',
 			allowBlank : true,
 			fieldLabel : 'Date',
+			style : {
+				marginLeft : '15px'
+			},
 			format : 'd/m/Y',
 			renderer : Ext.util.Format.dateRenderer('d/m/Y'),
-			style : {
-				marginLeft : '150px'
-			},
 			listeners : {
 				'beforerender' : function(){
 					var current = new Date();
@@ -71,23 +69,20 @@ Ext.define('Accounts.view.main.MainView', {
 			border : false,
 			layout: 'column',
 			id : 'topEdit',
-			style : {
-				paddingLeft : '80px'
-			},
 			items : [{
 				xtype : 'combo',
 				allowBlank: false,
 				typeAhead : true,
+				fieldLabel : 'Type',
+				labelAlign : 'top',
+				labelWidth : 50,
 				width : 90,
 				value : 'Credit',
 				id : 'mainMode',
 				store : [
 					['Credit', 'Credit'],
 					['Debit', 'Debit']
-				],
-				style : {
-					margin : '10px'
-				}
+				]
 			},{
 				xtype: 'combobox',
 				id : 'mainItem',
@@ -96,11 +91,12 @@ Ext.define('Accounts.view.main.MainView', {
 				reference: 'accounts',
 				publishes: 'value',
 				displayField : 'name',
+				emptyText : 'Account',
 				store: {
-					type: 'accountStore'
+					type: 'accComboStore'
 				},
 				style : {
-					margin : '10px'
+					margin : '30px 0px 0px 10px'
 				},
 				queryMode: 'local',
 				listConfig: {
@@ -109,9 +105,15 @@ Ext.define('Accounts.view.main.MainView', {
 					]
 				},
 				listeners : {
+					'beforequery' : function(){
+						var combo = Ext.getCmp('mainItem');
+						combo.getStore().reload();
+					},
 					'select' : function(){
 						var item = Ext.getCmp('mainItem');
 						var name = Ext.getCmp('mainName');
+						console.log(item.getValue());
+						console.log(name.getValue());
 						Ext.Ajax.request({
 							url : '/accounts/viewAccount?id=' + item.getValue(),
 							success : function(response, request){
@@ -142,13 +144,36 @@ Ext.define('Accounts.view.main.MainView', {
 				}
 			},{
 				xtype: 'numberfield',
+				width : 70,
+				disabled : true,
+				name: 'numberfield1',
+				id : 'mainQty',
+				fieldLabel: 'Quantity',
+				labelAlign : 'top',
+				value: 0,
+				minValue: 0,
+				maxValue: 50,
+				style : {
+					marginLeft : '10px'
+				}
+			},{
+				xtype : 'textfield',
+				value : 'Details',
+				id : 'mainDesc',
+				emptyText : 'Details',
+				width : 250,
+				style : {
+					margin : '30px 0px 0px 10px'
+				}
+			},{
+				xtype: 'numberfield',
 				width : 100,
 				value: 0,
 				minValue: 0,
 				hideTrigger: true,
 				id : 'mainAmt',
 				style : {
-					margin : '10px'
+					margin : '30px 0px 0px 10px'
 				}
 			}]
 		},{
@@ -156,73 +181,69 @@ Ext.define('Accounts.view.main.MainView', {
 			layout : 'column',
 			border : false,
 			items : [{
-				xtype: 'numberfield',
-				width : 200,
-				disabled : true,
-				name: 'numberfield1',
-				id : 'mainQty',
-				fieldLabel: 'Enter quantity per unit',
-				value: 0,
-				minValue: 0,
-				maxValue: 50,
+				xtype : 'button',
+				text : 'Add',
 				style : {
+					width : '100px',
+					float : 'right',
 					margin : '10px'
-				}
-			},{
-				xtype : 'textfield',
-				id : 'mainDesc',
-				width : 300,
-				style : {
-					margin : '10px'
+				},
+				handler : function(){
+					var amt = Ext.getCmp('mainAmt');
+					var desc = Ext.getCmp('mainDesc');
+					var mode = Ext.getCmp('mainMode');
+					var name = Ext.getCmp('mainName');
+					var qty = Ext.getCmp('mainQty');
+					
+					if(mode.getValue() == 'Credit'){
+						var acc = Ext.create('Accounts.model.daily.Credit');
+						acc.set('accName', name.getValue());
+						acc.set('description', desc.getValue());
+						acc.set('amount', amt.getValue());
+						
+						if(qty.isDisabled()){
+							acc.set('quantity', '');
+						}
+						else{
+							acc.set('quantity', qty.getValue());
+						}
+						
+						var grid = Ext.getCmp('creditGrid');
+						var accStore = grid.getStore();
+						accStore.add(acc);
+						//grid.refresh();
+					}
+					else{
+						var acc = Ext.create('Accounts.model.daily.Debit');
+						acc.set('accName', name.getValue());
+						acc.set('description', desc.getValue());
+						acc.set('amount', amt.getValue());
+						
+						if(qty.isDisabled()){
+							acc.set('quantity', '');
+						}
+						else{
+							acc.set('quantity', qty.getValue());
+						}
+						
+						var grid = Ext.getCmp('debitGrid');
+						var accStore = grid.getStore();
+						accStore.add(acc);
+						//grid.refresh();
+					}
+					name.setValue('');
+					var combo = Ext.getCmp('mainItem');
+					combo.setValue('');
+					mode.setValue('Credit');
+					var qty = Ext.getCmp('mainQty');
+					if(qty.isDisabled() == false){
+						qty.setValue(0);
+						qty.setDisabled(true);
+					}
+					amt.setValue(0);
+					desc.setValue('');
 				}
 			}]
-		},{
-			xtype : 'button',
-			text : 'Add',
-			style : {
-				float : 'right',
-				width : '100px'
-			},
-			handler : function(){
-				var amt = Ext.getCmp('mainAmt');
-				var desc = Ext.getCmp('mainDesc');
-				var mode = Ext.getCmp('mainMode');
-				var name = Ext.getCmp('mainName');
-				
-				if(mode.getValue() == 'Credit'){
-					var acc = Ext.create('Accounts.model.daily.Credit');
-					acc.set('accName', name.getValue());
-					acc.set('description', desc.getValue());
-					acc.set('amount', amt.getValue());
-					
-					var grid = Ext.getCmp('creditGrid');
-					var accStore = grid.getStore();
-					accStore.add(acc);
-					//grid.refresh();
-				}
-				else{
-					var acc = Ext.create('Accounts.model.daily.Debit');
-					acc.set('accName', name.getValue());
-					acc.set('description', desc.getValue());
-					acc.set('amount', amt.getValue());
-					
-					var grid = Ext.getCmp('debitGrid');
-					var accStore = grid.getStore();
-					accStore.add(acc);
-					//grid.refresh();
-				}
-				name.setValue('');
-				var combo = Ext.getCmp('mainItem');
-				combo.setValue('');
-				mode.setValue('Credit');
-				var qty = Ext.getCmp('mainQty');
-				if(qty.isDisabled() == false){
-					qty.setValue(0);
-					qty.setDisabled(true);
-				}
-				amt.setValue(0);
-				desc.setValue('');
-			}
 		}]
 	},{
 		xtype: 'panel',
@@ -244,9 +265,10 @@ Ext.define('Accounts.view.main.MainView', {
 				type : 'creditStore'
 			},
 			columns : [
-				{ text: 'Account Name',  dataIndex: 'accName', flex : 1 },
-				{ text: 'Description',  dataIndex: 'description', width : 250 },
-				{ text: 'Amount', dataIndex: 'amount', width : 120}
+				{ text: 'Account',  dataIndex: 'accName', flex : 1 },
+				{ text: 'Description',  dataIndex: 'description', width : 200 },
+				{ text: 'Quantity', dataIndex: 'quantity', width : 90},
+				{ text: 'Amount', dataIndex: 'amount', width : 100}
 			]
 		},{
 			xtype : 'grid',
@@ -262,9 +284,10 @@ Ext.define('Accounts.view.main.MainView', {
 				type : 'debitStore'
 			},
 			columns : [
-				{ text: 'Account Name',  dataIndex: 'accName', flex : 1 },
-				{text: 'Description',  dataIndex: 'description', width : 250},
-				{ text: 'Amount', dataIndex: 'amount', width : 120}
+				{ text: 'Account',  dataIndex: 'accName', flex : 1 },
+				{ text: 'Description',  dataIndex: 'description', width : 200 },
+				{ text: 'Quantity', dataIndex: 'quantity', width : 90},
+				{ text: 'Amount', dataIndex: 'amount', width : 100}
 			]
 		}]
 	}]

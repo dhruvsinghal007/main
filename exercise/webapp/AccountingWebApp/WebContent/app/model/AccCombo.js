@@ -1,4 +1,4 @@
-Ext.define('Accounts.model.Account', {
+Ext.define('Accounts.model.AccCombo', {
     extend : 'Ext.data.Model',
 	idProperty : 'accId',
 	fields : [
@@ -9,10 +9,7 @@ Ext.define('Accounts.model.Account', {
 	
 	proxy: {
         type: 'ajax',
-        url: '/accounts/viewAllAccountsPaginated',
-        reader: {
-			rootProperty: 'data',
-			totalProperty : 'total'
-        }
+        url: '/accounts/viewAllAccounts'
     }
+	
 });
