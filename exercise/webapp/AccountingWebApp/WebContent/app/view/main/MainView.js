@@ -7,6 +7,13 @@ Ext.define('Accounts.view.main.MainView', {
 	layout: 'anchor',
 	scrollable : true,
 	
+	listeners : {
+		'afterrender' : function(){
+			var combo = Ext.getCmp('mainAcc');
+			combo.focus();
+		}
+	},
+	
 	items : [{
 		xtype: 'fieldset',
 		width : 825,
@@ -43,10 +50,10 @@ Ext.define('Accounts.view.main.MainView', {
 					var amt = Ext.getCmp('mainAmt');
 					var desc = Ext.getCmp('mainDesc');
 					var mode = Ext.getCmp('mainMode');
-					var combo = Ext.getCmp('mainItem');
+					var combo = Ext.getCmp('mainAcc');
 					var qty = Ext.getCmp('mainQty');
 					
-					var name = panel.getComponent('mainItem');
+					var name = panel.getComponent('mainAcc');
 					
 					name.setValue('');
 					combo.setValue('');
@@ -85,7 +92,7 @@ Ext.define('Accounts.view.main.MainView', {
 				]
 			},{
 				xtype: 'combobox',
-				id : 'mainItem',
+				id : 'mainAcc',
 				width : 200,
 				valueField : 'accId',
 				reference: 'accounts',
@@ -106,14 +113,13 @@ Ext.define('Accounts.view.main.MainView', {
 				},
 				listeners : {
 					'beforequery' : function(){
-						var combo = Ext.getCmp('mainItem');
-						combo.getStore().reload();
+						var combo = Ext.getCmp('mainAcc');
+						var store = combo.getStore();
+						store.reload();
 					},
 					'select' : function(){
-						var item = Ext.getCmp('mainItem');
+						var item = Ext.getCmp('mainAcc');
 						var name = Ext.getCmp('mainName');
-						console.log(item.getValue());
-						console.log(name.getValue());
 						Ext.Ajax.request({
 							url : '/accounts/viewAccount?id=' + item.getValue(),
 							success : function(response, request){
@@ -123,16 +129,21 @@ Ext.define('Accounts.view.main.MainView', {
 								//console.log(acc);
 								
 								var type = acc.get('type');
-								console.log(type);
 								
 								var qty = Ext.getCmp('mainQty');
 								if(type == 'Commodity'){
 									qty.setDisabled(false);
 									qty.setValue(1);
+									qty.focus();
+									qty.selectText();
 								}
 								else{
 									qty.setValue(0);
 									qty.setDisabled(true);
+									var amt = Ext.getCmp('mainAmt');
+									amt.setDisabled(false);
+									amt.focus();
+									amt.selectText();
 								}
 								name.setValue(acc.get('name'));
 							},
@@ -150,11 +161,22 @@ Ext.define('Accounts.view.main.MainView', {
 				id : 'mainQty',
 				fieldLabel: 'Quantity',
 				labelAlign : 'top',
-				value: 0,
+				emptyText : 0,
 				minValue: 0,
 				maxValue: 50,
 				style : {
 					marginLeft : '10px'
+				},
+				listeners : {
+					'change' : function(){
+						var qty = Ext.getCmp('mainQty');
+						if(qty.getValue() > 0){
+							var amt = Ext.getCmp('mainAmt');
+							amt.setDisabled(false);
+							amt.focus();
+							amt.selectText();
+						}
+					}
 				}
 			},{
 				xtype : 'textfield',
@@ -170,10 +192,30 @@ Ext.define('Accounts.view.main.MainView', {
 				width : 100,
 				value: 0,
 				minValue: 0,
+				disabled : true,
 				hideTrigger: true,
+				enableKeyEvents : true,
 				id : 'mainAmt',
 				style : {
 					margin : '30px 0px 0px 10px'
+				},
+				listeners : {
+					'change' : function(){
+						var amt = Ext.getCmp('mainAmt');
+						var button = Ext.getCmp('mainBtn');
+						if(amt.getValue() > 0){
+							button.setDisabled(false);
+						}
+						else{
+							button.setDisabled(true);
+						}
+					},
+					'specialkey' : function(f,e){  
+						if(e.getKey() == Ext.event.Event.ENTER){
+							var btn = Ext.getCmp('mainBtn');
+							btn.handler.call(btn.scope);
+						}  
+					}
 				}
 			}]
 		},{
@@ -183,6 +225,8 @@ Ext.define('Accounts.view.main.MainView', {
 			items : [{
 				xtype : 'button',
 				text : 'Add',
+				id : 'mainBtn',
+				disabled : true,
 				style : {
 					width : '100px',
 					float : 'right',
@@ -194,6 +238,9 @@ Ext.define('Accounts.view.main.MainView', {
 					var mode = Ext.getCmp('mainMode');
 					var name = Ext.getCmp('mainName');
 					var qty = Ext.getCmp('mainQty');
+					
+					var cTotal = Ext.getCmp('creditTotal');
+					var dTotal = Ext.getCmp('debitTotal');
 					
 					if(mode.getValue() == 'Credit'){
 						var acc = Ext.create('Accounts.model.daily.Credit');
@@ -211,7 +258,8 @@ Ext.define('Accounts.view.main.MainView', {
 						var grid = Ext.getCmp('creditGrid');
 						var accStore = grid.getStore();
 						accStore.add(acc);
-						//grid.refresh();
+						
+						cTotal.setValue(accStore.sum('amount'));
 					}
 					else{
 						var acc = Ext.create('Accounts.model.daily.Debit');
@@ -229,12 +277,13 @@ Ext.define('Accounts.view.main.MainView', {
 						var grid = Ext.getCmp('debitGrid');
 						var accStore = grid.getStore();
 						accStore.add(acc);
-						//grid.refresh();
+						
+						dTotal.setValue(accStore.sum('amount'));
 					}
 					name.setValue('');
-					var combo = Ext.getCmp('mainItem');
+					var combo = Ext.getCmp('mainAcc');
 					combo.setValue('');
-					mode.setValue('Credit');
+					combo.focus();
 					var qty = Ext.getCmp('mainQty');
 					if(qty.isDisabled() == false){
 						qty.setValue(0);
@@ -289,6 +338,29 @@ Ext.define('Accounts.view.main.MainView', {
 				{ text: 'Quantity', dataIndex: 'quantity', width : 90},
 				{ text: 'Amount', dataIndex: 'amount', width : 100}
 			]
+		}]
+	},{
+		xtype: 'fieldset',
+		width : 1100,
+		layout : 'column',
+		items : [{
+			xtype : 'displayfield',
+			fieldLabel : 'Total',
+			layout : 'fit',
+			id : 'creditTotal',
+			style: {
+				marginLeft: '345px',
+			}
+		},{
+			xtype : 'displayfield',
+			fieldLabel : 'Total',
+			width : 50,
+			layout : 'fit',
+			id : 'debitTotal',
+			style: {
+				float : 'right',
+				marginRight : '60px'
+			}
 		}]
 	}]
 	

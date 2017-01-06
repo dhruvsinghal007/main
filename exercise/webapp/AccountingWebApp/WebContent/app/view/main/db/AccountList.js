@@ -29,7 +29,21 @@ Ext.define('Accounts.view.main.db.AccountList', {
 			columns: [
 				{ text: 'Id',  dataIndex: 'accId', width : 40 },
 				{ text: 'Account Name',  dataIndex: 'name',flex : 1, editor : {allowBlank : true} },
-				{ text: 'Account Type', dataIndex: 'type', flex: 1, editor : {allowBlank : true} }
+				{ 
+					text: 'Account Type', 
+					dataIndex: 'type', 
+					flex: 1, 
+					editor : {
+						xtype : 'combo',
+						allowBlank: false,
+						typeAhead : true,
+						value : 'Firm',
+						store : [
+							['Firm', 'Firm'],
+							['Commodity', 'Commodity']
+						]
+					} 
+				}
 			],
 			
 			tbar : [{
@@ -49,8 +63,8 @@ Ext.define('Accounts.view.main.db.AccountList', {
 					
 					var accountModel = Ext.create("Accounts.model.Account");
 					
-					accountModel.set("name","New Account");
-					accountModel.set("type","Enter type");
+					accountModel.set("name","Enter Account Name");
+					accountModel.set("type","Firm");
 					
 					Ext.Ajax.request({
 						url : '/accounts/addAccount',
