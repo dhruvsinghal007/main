@@ -13,7 +13,7 @@ Ext.define('Accounts.view.main.db.AccountList', {
 		
 		Ext.apply(this,{
 			plugins : [this.editing],
-			width : '100%',
+			width : 1100,
 			height : 400,
 			selType : 'checkboxmodel',
 			viewConfig : 
@@ -269,7 +269,6 @@ Ext.define('Accounts.view.main.db.AccountList', {
 		});
 		
 		this.callParent();
-		
 	}
 	
 });

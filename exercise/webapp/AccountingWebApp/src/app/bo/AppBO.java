@@ -13,12 +13,14 @@ import app.db.SalePurchaseDB;
 import app.dto.Account;
 import app.dto.Payment;
 import app.dto.SalePurchase;
+import app.dto.Self;
 
 public class AppBO implements InitializingBean{
 
 	private Map<Integer, SalePurchase> salePurchaseEntries = SalePurchaseDB.getSPItems();
 	private Map<Integer, Payment> payments = PaymentDB.getPayments(); 
 	private Map<Integer, Account> accounts = AccountDB.getAccounts();
+	private Self self = new Self();
 	
 	/*
 	 * below methods for getting total number of items 
@@ -54,6 +56,10 @@ public class AppBO implements InitializingBean{
 		return accounts.get(id);
 	}
 	
+	public Self getSelf(){
+		return self;
+	}
+	
 	/*
 	 * below methods for viewing all elements from db
 	 */
@@ -72,7 +78,6 @@ public class AppBO implements InitializingBean{
 		return list;
 	}
 
-	
 	/*
 	 * below methods for viewing all elements from db in paginated fashion (takes start and 
 	 * limit)
@@ -305,6 +310,8 @@ public class AppBO implements InitializingBean{
 		acc8.setType("Firm");
 		accounts.put(acc8.getAccId(), acc8);
 		
+		self.setName("Prem Traders");
+		self.setBalance(50000);
 		
 	}
 

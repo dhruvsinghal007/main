@@ -20,6 +20,7 @@ import app.bo.AppBO;
 import app.dto.Account;
 import app.dto.Payment;
 import app.dto.SalePurchase;
+import app.dto.Self;
 
 @Path("/")
 @Component
@@ -71,6 +72,14 @@ public class AppService {
 	public Account viewAccount(@QueryParam("id") int id){
 		Account account = appBO.viewAccount(id); 
 		return account;
+	}
+	
+	@GET
+	@Path("/viewSelf")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Self viewSelf(){
+		Self self = appBO.getSelf(); 
+		return self;
 	}
 	
 	/*@GET

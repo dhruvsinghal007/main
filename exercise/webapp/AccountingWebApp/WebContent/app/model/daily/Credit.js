@@ -4,6 +4,6 @@ Ext.define('Accounts.model.daily.Credit', {
 		{ name : 'accName', type : 'string' },
 		{ name : 'description', type : 'string' },
 		{ name : 'quantity', type : 'string'},
-		{ name : 'amount', type : 'int'}
+		{ name : 'amount', type : 'number'}
 	]
 });

@@ -105,6 +105,7 @@ Ext.define('Accounts.view.main.MainView', {
 				style : {
 					margin : '30px 0px 0px 10px'
 				},
+				defaultListConfig: { loadingText: null, loadMask: false },
 				queryMode: 'local',
 				listConfig: {
 					itemTpl: [
@@ -116,6 +117,16 @@ Ext.define('Accounts.view.main.MainView', {
 						var combo = Ext.getCmp('mainAcc');
 						var store = combo.getStore();
 						store.reload();
+					},
+					'specialkey' : function(field, e){
+						if (e.getKey() == e.BACKSPACE) {
+							var amt = Ext.getCmp('mainAmt');
+							var qty = Ext.getCmp('mainQty');
+							amt.setValue(0);
+							qty.setValue(0);
+							amt.setDisabled(true);
+							qty.setDisabled(true);
+						}
 					},
 					'select' : function(){
 						var item = Ext.getCmp('mainAcc');
@@ -131,6 +142,10 @@ Ext.define('Accounts.view.main.MainView', {
 								var type = acc.get('type');
 								
 								var qty = Ext.getCmp('mainQty');
+								
+								var amt = Ext.getCmp('mainAmt');
+								amt.setDisabled(false);
+								
 								if(type == 'Commodity'){
 									qty.setDisabled(false);
 									qty.setValue(1);
@@ -140,8 +155,6 @@ Ext.define('Accounts.view.main.MainView', {
 								else{
 									qty.setValue(0);
 									qty.setDisabled(true);
-									var amt = Ext.getCmp('mainAmt');
-									amt.setDisabled(false);
 									amt.focus();
 									amt.selectText();
 								}
@@ -166,17 +179,6 @@ Ext.define('Accounts.view.main.MainView', {
 				maxValue: 50,
 				style : {
 					marginLeft : '10px'
-				},
-				listeners : {
-					'change' : function(){
-						var qty = Ext.getCmp('mainQty');
-						if(qty.getValue() > 0){
-							var amt = Ext.getCmp('mainAmt');
-							amt.setDisabled(false);
-							amt.focus();
-							amt.selectText();
-						}
-					}
 				}
 			},{
 				xtype : 'textfield',
@@ -297,71 +299,82 @@ Ext.define('Accounts.view.main.MainView', {
 	},{
 		xtype: 'panel',
 		width : 1100,
-		height : 250,
+		height : 290,
 		layout : 'column',
 		items : [{
-			xtype : 'grid',
-			title : 'Credit',
+			xtype : 'panel',
 			width : 500,
-			scrollable : true,
-			height : 250,
-			layout : 'fit',
-			id : 'creditGrid',
+			height : 290,
 			style: {
 				marginLeft: '15px'
 			},
-			store : {
-				type : 'creditStore'
-			},
-			columns : [
-				{ text: 'Account',  dataIndex: 'accName', flex : 1 },
-				{ text: 'Description',  dataIndex: 'description', width : 200 },
-				{ text: 'Quantity', dataIndex: 'quantity', width : 90},
-				{ text: 'Amount', dataIndex: 'amount', width : 100}
-			]
+			items : [{
+				xtype : 'grid',
+				title : 'Credit',
+				width : 500,
+				scrollable : true,
+				height : 250,
+				layout : 'fit',
+				id : 'creditGrid',
+				store : {
+					type : 'creditStore'
+				},
+				columns : [
+					{ text: 'Account',  dataIndex: 'accName', flex : 1 },
+					{ text: 'Description',  dataIndex: 'description', width : 200 },
+					{ text: 'Quantity', dataIndex: 'quantity', width : 90},
+					{ text: 'Amount', dataIndex: 'amount', width : 100}
+				]
+			},{
+				xtype : 'fieldset',
+				items : [{
+					xtype : 'displayfield',
+					fieldLabel : 'Total',
+					layout : 'fit',
+					id : 'creditTotal',
+					width : 500,
+					style : {
+						paddingLeft : '300px'
+					}
+				}]
+			}]
 		},{
-			xtype : 'grid',
-			title : 'Debit',
+			xtype : 'panel',
 			width : 500,
-			scrollable : true,
-			height : 250,
-			id : 'debitGrid',
+			height : 290,
 			style: {
 				marginLeft: '50px'
 			},
-			store : {
-				type : 'debitStore'
-			},
-			columns : [
-				{ text: 'Account',  dataIndex: 'accName', flex : 1 },
-				{ text: 'Description',  dataIndex: 'description', width : 200 },
-				{ text: 'Quantity', dataIndex: 'quantity', width : 90},
-				{ text: 'Amount', dataIndex: 'amount', width : 100}
-			]
+			items : [{
+				xtype : 'grid',
+				title : 'Debit',
+				width : 500,
+				scrollable : true,
+				height : 250,
+				id : 'debitGrid',
+				store : {
+					type : 'debitStore'
+				},
+				columns : [
+					{ text: 'Account',  dataIndex: 'accName', flex : 1 },
+					{ text: 'Description',  dataIndex: 'description', width : 200 },
+					{ text: 'Quantity', dataIndex: 'quantity', width : 90},
+					{ text: 'Amount', dataIndex: 'amount', width : 100}
+				]
+			},{
+				xtype : 'fieldset',
+				items : [{
+					xtype : 'displayfield',
+					fieldLabel : 'Total',
+					width : 500,
+					height : 30,
+					layout : 'fit',
+					id : 'debitTotal',
+					style : {
+						paddingLeft : '300px'
+					}
+				}]
+			}]
 		}]
-	},{
-		xtype: 'fieldset',
-		width : 1100,
-		layout : 'column',
-		items : [{
-			xtype : 'displayfield',
-			fieldLabel : 'Total',
-			layout : 'fit',
-			id : 'creditTotal',
-			style: {
-				marginLeft: '345px',
-			}
-		},{
-			xtype : 'displayfield',
-			fieldLabel : 'Total',
-			width : 50,
-			layout : 'fit',
-			id : 'debitTotal',
-			style: {
-				float : 'right',
-				marginRight : '60px'
-			}
-		}]
-	}]
-	
+	}]	
 });
